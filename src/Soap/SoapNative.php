@@ -1,10 +1,11 @@
 <?php
-namespace Eduardokum\Soap;
+namespace Eduardokum\CorreiosPhp\Soap;
 
-use Eduardokum\Contracts\Soap\SoapInterface;
+use Eduardokum\CorreiosPhp\Contracts\Soap\Soap as SoapContract;
 
-class SoapNative extends Soap implements SoapInterface
+class SoapNative extends Soap implements SoapContract
 {
-    public function send($url, $action = '', $request = '') {
+    public function send($url, $action = '', $request = '', $namespaces = [])
+    {
     }
 }

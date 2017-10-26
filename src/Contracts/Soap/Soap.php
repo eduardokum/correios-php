@@ -1,10 +1,9 @@
 <?php
 
-namespace Eduardokum\Contracts\Soap;
+namespace Eduardokum\CorreiosPhp\Contracts\Soap;
 
-interface SoapInterface
+interface Soap
 {
-    
     //constants
     const SSL_DEFAULT = 0; //default
     const SSL_TLSV1 = 1; //TLSv1
@@ -39,8 +38,9 @@ interface SoapInterface
      * @param        $url
      * @param string $action
      * @param string $request
+     * @param array  $namespaces
      *
      * @return mixed
      */
-    public function send($url, $action = '', $request = '');
+    public function send($url, $action = '', $request = '', $namespaces = []);
 }

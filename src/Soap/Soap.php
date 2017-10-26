@@ -1,9 +1,9 @@
 <?php
-namespace Eduardokum\Soap;
+namespace Eduardokum\CorreiosPhp\Soap;
 
-use Eduardokum\Contracts\Soap\SoapInterface;
+use Eduardokum\CorreiosPhp\Contracts\Soap\Soap as SoapContract;
 
-abstract class Soap implements SoapInterface
+abstract class Soap implements SoapContract
 {
     /**
      * @var int
@@ -59,17 +59,6 @@ abstract class Soap implements SoapInterface
     public $soapinfo = [];
 
     /**
-     * Set option to encript private key before save in filesystem
-     * for an additional layer of protection
-     * @param bool $encript
-     * @return bool
-     */
-    public function setEncriptPrivateKey($encript = true)
-    {
-        return $this->encriptPrivateKey = $encript;
-    }
-
-    /**
      * Set debug mode, this mode will save soap envelopes in temporary directory
      * @param bool $value
      * @return bool
@@ -102,7 +91,7 @@ abstract class Soap implements SoapInterface
     {
         return $this->soapProtocol = $protocol;
     }
-    
+
     /**
      * Set proxy parameters
      * @param string $ip
@@ -122,9 +111,53 @@ abstract class Soap implements SoapInterface
      * @param string $url
      * @param string $action
      * @param string $request
+     * @param array  $namespaces
      *
      * @return mixed
      */
-    abstract public function send($url, $action = '', $request = '');
+    abstract public function send($url, $action = '', $request = '', $namespaces = []);
+
+    /**
+     * Mount soap envelope
+     *
+     * @param string $request
+     * @param array  $namespaces
+     *
+     * @return string
+     */
+    protected function envelop($request, $namespaces = [])
+    {
+        $namespaces = array_merge([
+            'xmlns:soap' => 'http://schemas.xmlsoap.org/soap/envelope/',
+            'xmlns:xsi'     => "http://www.w3.org/2001/XMLSchema-instance",
+            'xmlns:xsd'     => "http://www.w3.org/2001/XMLSchema",
+        ], $namespaces);
+
+        $envelope = '<?xml version="1.0" encoding="UTF-8"?><soap:Envelope';
+        foreach ($namespaces as $key => $value) {
+            $envelope .= vsprintf(' %s="%s"', [$key, $value]);
+        }
+        $envelope .= ">";
+        $envelope .= "<soap:Body>$request</soap:Body>";
+        $envelope .=  "</soap:Envelope>";
+        return $envelope;
+    }
+
+    /**
+     * @param $response
+     *
+     * @return \stdClass
+     */
+    protected function response($response)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($response);
+        $response = $dom->getElementsByTagName('return')->item(0);
+        $response  = simplexml_load_string($dom->saveXML($response));
+        $response = json_encode($response, JSON_PRETTY_PRINT);
+        return json_decode($response);
+    }
 
 }

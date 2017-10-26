@@ -1,0 +1,12 @@
+{
+  "homologacao": {
+    "calculo-preco-prazo": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo",
+    "rastreamento": "http://webservice.correios.com.br/service/rastro",
+    "sigep": "https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
+  },
+  "producao": {
+    "calculo-preco-prazo": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo",
+    "rastreamento": "http://webservice.correios.com.br/service/rastro",
+    "sigep": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
+  }
+}
