@@ -8,4 +8,5 @@ interface Config
     public function getPassword();
     public function getAdministrativeCode();
     public function getContract();
+    public function getPostCard();
 }

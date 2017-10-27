@@ -6,10 +6,11 @@ use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 class Producao implements ConfigContract
 {
     private $environment = 'producao';
-    private $user = 'sigep';
-    private $password = 'n5f9t8';
-    private $administrativeCode = '08082650';
-    private $contract = '9912208555';
+    private $user = null;
+    private $password = null;
+    private $administrativeCode = null;
+    private $contract = null;
+    private $postCard = null;
 
     /**
      * @return string
@@ -93,5 +94,24 @@ class Producao implements ConfigContract
     public function getContract()
     {
         return $this->contract;
+    }
+
+    /**
+     * @param $postCard
+     *
+     * @return $this
+     */
+    public function setPostCard($postCard)
+    {
+        $this->postCard = $postCard;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostCard()
+    {
+        return $this->postCard;
     }
 }

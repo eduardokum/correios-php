@@ -8,14 +8,14 @@ class SoapCurl extends Soap implements SoapContract
     public function send($url, $action = '', $request = '', $namespaces = [])
     {
         $this->request = $request = is_string($request) ? $this->envelop($request, $namespaces) : $request;
-        $headers = [
+        $headers = array_filter([
             'Content-Type: text/xml;charset=utf-8',
-            sprintf('SOAPAction: "%s"', $action),
+            !empty(trim($action)) ? sprintf('SOAPAction: "%s"', $action) : null,
             'Accept: text/xml',
             'Cache-Control: no-cache',
             'Pragma: no-cache',
             sprintf('Content-length: %s', strlen($request)),
-        ];
+        ]);
         $curl = curl_init();
         if ($this->proxyIP != '') {
             curl_setopt($curl, CURLOPT_HTTPPROXYTUNNEL, true);

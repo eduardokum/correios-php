@@ -42,12 +42,12 @@ class Correios
     {
         $soapClass = '\\Eduardokum\\CorreiosPhp\\Soap\\Soap' . ucfirst(strtolower($type));
 
-        if (class_exists($soapClass)) {
+        if (class_exists($soapClass) && !empty(trim($type))) {
             $this->soap = new $soapClass();
             return $this->soap;
         }
 
-        throw new InvalidSoapException("The type $type is not acceptable");
+        throw new InvalidSoapException("The type '$type' is not acceptable");
     }
 
     /**
@@ -153,5 +153,70 @@ class Correios
         $result = $this->soap->send($url, 'http://tempuri.org/CalcPrecoPrazo', $request);
 
         return $result->CalcPrecoPrazoResult;
+    }
+
+    /**
+     * @param $service
+     * @param $cepFrom
+     * @param $cepTo
+     *
+     * @return boolean
+     */
+    public function statusServico($service, $cepFrom, $cepTo)
+    {
+        $request = '<cli:verificaDisponibilidadeServico>';
+        $request .= sprintf('<codAdministrativo>%s</codAdministrativo>', $this->config->getAdministrativeCode());
+        $request .= sprintf('<numeroServico>%s</numeroServico>', $service);
+        $request .= sprintf('<cepOrigem>%08s</cepOrigem>', preg_replace('/[^0-9]/', '', $cepFrom));
+        $request .= sprintf('<cepDestino>%08s</cepDestino>', preg_replace('/[^0-9]/', '', $cepTo));
+        $request .= sprintf('<usuario>%s</usuario>', $this->config->getUser());
+        $request .= sprintf('<senha>%s</senha>', $this->config->getPassword());
+        $request .= '</cli:verificaDisponibilidadeServico>';
+        $url = $this->url('sigep');
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+
+        $result = $this->soap->send($url, null, $request, $namespaces);
+        return $result->return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function buscaCliente()
+    {
+        $request = '<cli:buscaCliente>';
+        $request .= sprintf('<idContrato>%s</idContrato>', $this->config->getContract());
+        $request .= sprintf('<idCartaoPostagem>%s</idCartaoPostagem>', $this->config->getPostCard());
+        $request .= sprintf('<usuario>%s</usuario>', $this->config->getUser());
+        $request .= sprintf('<senha>%s</senha>', $this->config->getPassword());
+        $request .= '</cli:buscaCliente>';
+        $url = $this->url('sigep');
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+
+        $result = $this->soap->send($url, null, $request, $namespaces);
+        return $result->return;
+    }
+
+    /**
+     * @param $cep
+     *
+     * @return mixed
+     */
+    public function consultaCEP($cep)
+    {
+        $request = '<cli:consultaCEP>';
+        $request .= sprintf('<cep>%08s</cep>', preg_replace('/[^0-9]/', '', $cep));
+        $request .= '</cli:consultaCEP>';
+        $url = $this->url('sigep');
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+
+        $result = $this->soap->send($url, null, $request, $namespaces);
+        return $result->return;
     }
 }
