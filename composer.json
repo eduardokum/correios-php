@@ -1,5 +1,5 @@
 {
-    "name": "eduardo/correios-php",
+    "name": "eduardokum/correios-php",
     "description": "Classes para acessar o sistema da SIGEP dos correios",
     "type": "library",
     "license": "MIT",
