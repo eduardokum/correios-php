@@ -132,24 +132,23 @@ class Correios
         }
 
         $url = $this->url('calculo-preco-prazo');
-        $request = [
-            'nCdEmpresa' => $this->config->getAdministrativeCode(),
-            'sDsSenha' => $this->config->getPassword(),
-            'nCdServico' => $service,
-            'sCepOrigem' => preg_replace('/[^0-9]/', '', $cepFrom),
-            'sCepDestino' => preg_replace('/[^0-9]/', '', $cepTo),
-            'nVlPeso' => $weight,
-            'nCdFormato' => $format,
-            'nVlComprimento' => $length,
-            'nVlAltura' => $height,
-            'nVlLargura' => $width,
-            'nVlDiametro' => $diameter,
-            'sCdMaoPropria' => $maoPropria ? 'S' : 'N',
-            'nVlValorDeclarado' => $price,
-            'sCdAvisoRecebimento' => $ar ? 'S' : 'N',
-            'StrRetorno' => 'XML',
-            'nIndicaCalculo' => '3',
-        ];
-        return $this->soap->send($url, 'CalcPrecoPrazo', $request);
+        $request = '<CalcPrecoPrazo xmlns="http://tempuri.org/">';
+        $request .= sprintf('<nCdEmpresa>%s</nCdEmpresa>', $this->config->getAdministrativeCode());
+        $request .= sprintf('<sDsSenha>%s</sDsSenha>', $this->config->getPassword());
+        $request .= sprintf('<nCdServico>%s</nCdServico>', $service);
+        $request .= sprintf('<sCepOrigem>%08s</sCepOrigem>', preg_replace('/[^0-9]/', '', $cepFrom));
+        $request .= sprintf('<sCepDestino>%08s</sCepDestino>', preg_replace('/[^0-9]/', '', $cepTo));
+        $request .= sprintf('<nVlPeso>%d</nVlPeso>', $weight);
+        $request .= sprintf('<nCdFormato>%d</nCdFormato>', $format);
+        $request .= sprintf('<nVlComprimento>%d</nVlComprimento>', $length);
+        $request .= sprintf('<nVlAltura>%d</nVlAltura>', $height);
+        $request .= sprintf('<nVlLargura>%d</nVlLargura>', $width);
+        $request .= sprintf('<nVlDiametro>%d</nVlDiametro>', $diameter);
+        $request .= sprintf('<sCdMaoPropria>%s</sCdMaoPropria>', $maoPropria ? 'S' : 'N');
+        $request .= sprintf('<nVlValorDeclarado>%s</nVlValorDeclarado>', $price);
+        $request .= sprintf('<sCdAvisoRecebimento>%s</sCdAvisoRecebimento>', $ar ? 'S' : 'N');
+        $request .= '</CalcPrecoPrazo>';
+
+        return $this->soap->send($url, 'http://tempuri.org/CalcPrecoPrazo', $request);
     }
 }

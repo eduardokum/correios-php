@@ -2,6 +2,7 @@
 namespace Eduardokum\CorreiosPhp\Soap;
 
 use Eduardokum\CorreiosPhp\Contracts\Soap\Soap as SoapContract;
+use Eduardokum\CorreiosPhp\Exception\SoapException;
 
 abstract class Soap implements SoapContract
 {
@@ -36,27 +37,19 @@ abstract class Soap implements SoapContract
     /**
      * @var string
      */
-    public $responseHead;
+    public $response;
     /**
      * @var string
      */
-    public $responseBody;
+    public $request;
     /**
      * @var string
      */
-    public $requestHead;
-    /**
-     * @var string
-     */
-    public $requestBody;
-    /**
-     * @var string
-     */
-    public $soaperror;
+    public $soapError;
     /**
      * @var array
      */
-    public $soapinfo = [];
+    public $soapInfo = [];
 
     /**
      * Set debug mode, this mode will save soap envelopes in temporary directory
@@ -147,6 +140,7 @@ abstract class Soap implements SoapContract
      * @param $response
      *
      * @return \stdClass
+     * @throws SoapException
      */
     protected function response($response)
     {
@@ -154,7 +148,13 @@ abstract class Soap implements SoapContract
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($response);
-        $response = $dom->getElementsByTagName('return')->item(0);
+
+        if (strpos($response, 'faultstring') !== false) {
+            $exception = $dom->getElementsByTagName('faultstring')->item(0)->nodeValue;
+            throw new SoapException($exception);
+        }
+
+        $response = $dom->getElementsByTagName('Body')->item(0)->childNodes->item(0);
         $response  = simplexml_load_string($dom->saveXML($response));
         $response = json_encode($response, JSON_PRETTY_PRINT);
         return json_decode($response);
