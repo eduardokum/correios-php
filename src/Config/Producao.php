@@ -6,6 +6,7 @@ use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 class Producao implements ConfigContract
 {
     private $environment = 'producao';
+    private $cnpj = null;
     private $user = null;
     private $password = null;
     private $administrativeCode = null;
@@ -19,6 +20,25 @@ class Producao implements ConfigContract
     public function getEnvironment()
     {
         return $this->environment;
+    }
+
+    /**
+     * @param $cnpj
+     *
+     * @return $this
+     */
+    public function setCNPJ($cnpj)
+    {
+        $this->cnpj = $cnpj;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCNPJ()
+    {
+        return $this->cnpj;
     }
 
     /**

@@ -6,6 +6,7 @@ use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 class Homologacao implements ConfigContract
 {
     private $environment = 'homologacao';
+    private $cnpj = '34028316000103';
     private $user = 'sigep';
     private $password = 'n5f9t8';
     private $administrativeCode = '08082650';
@@ -19,6 +20,13 @@ class Homologacao implements ConfigContract
     public function getEnvironment()
     {
         return $this->environment;
+    }
+    /**
+     * @return string
+     */
+    public function getCNPJ()
+    {
+        return $this->cnpj;
     }
 
     /**
