@@ -154,7 +154,9 @@ abstract class Soap implements SoapContract
             throw new SoapException($exception);
         }
 
-        $response = $dom->getElementsByTagName('Body')->item(0)->childNodes->item(0);
+        $response = $dom->getElementsByTagName('Body')
+            ->item(0) // Get Body
+            ->childNodes->item(0); // Get Result Object;
         $response  = simplexml_load_string($dom->saveXML($response));
         $response = json_encode($response, JSON_PRETTY_PRINT);
         return json_decode($response);

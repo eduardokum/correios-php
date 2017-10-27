@@ -84,7 +84,8 @@ class Correios
         $namespaces = [
             'xmlns:res' => 'http://resource.webservice.correios.com.br/',
         ];
-        return $this->soap->send($url, 'buscaEventosLista', $request, $namespaces);
+        $result = $this->soap->send($url, 'buscaEventosLista', $request, $namespaces);
+        return $result->return;
     }
 
     /**
@@ -149,6 +150,8 @@ class Correios
         $request .= sprintf('<sCdAvisoRecebimento>%s</sCdAvisoRecebimento>', $ar ? 'S' : 'N');
         $request .= '</CalcPrecoPrazo>';
 
-        return $this->soap->send($url, 'http://tempuri.org/CalcPrecoPrazo', $request);
+        $result = $this->soap->send($url, 'http://tempuri.org/CalcPrecoPrazo', $request);
+
+        return $result->CalcPrecoPrazoResult;
     }
 }
