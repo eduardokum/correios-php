@@ -11,6 +11,7 @@ class Producao implements ConfigContract
     private $administrativeCode = null;
     private $contract = null;
     private $postCard = null;
+    private $serviceCode = null;
 
     /**
      * @return string
@@ -113,5 +114,23 @@ class Producao implements ConfigContract
     public function getPostCard()
     {
         return $this->postCard;
+    }
+
+    /**
+     * @param $serviceCode
+     *
+     * @return $this
+     */
+    public function setServiceCode($serviceCode)
+    {
+        $this->serviceCode = $serviceCode;
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getServiceCode()
+    {
+        return $this->serviceCode;
     }
 }

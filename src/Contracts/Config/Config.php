@@ -9,4 +9,5 @@ interface Config
     public function getAdministrativeCode();
     public function getContract();
     public function getPostCard();
+    public function getServiceCode();
 }

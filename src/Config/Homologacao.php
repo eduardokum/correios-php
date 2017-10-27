@@ -10,7 +10,8 @@ class Homologacao implements ConfigContract
     private $password = 'n5f9t8';
     private $administrativeCode = '08082650';
     private $contract = '9912208555';
-    private $postCad = '0057018901';
+    private $postCard = '0057018901';
+    private $serviceCode = '41076';
 
     /**
      * @return string
@@ -57,7 +58,14 @@ class Homologacao implements ConfigContract
      */
     public function getPostCard()
     {
-        return $this->postCad;
+        return $this->postCard;
     }
 
+    /**
+     * @return string
+     */
+    public function getServiceCode()
+    {
+        return $this->serviceCode;
+    }
 }
