@@ -1,14 +1,18 @@
 {
-  "homologacao": {
-    "calculo-preco-prazo": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx",
-    "rastreamento": "http://webservice.correios.com.br/service/rastro",
-    "sigep": "https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente",
-    "logistica": "http://webservicescolhomologacao.correios.com.br/ScolWeb/WebServiceScol"
+  "calculo": {
+    "homologacao": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx",
+    "producao": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx"
   },
-  "producao": {
-    "calculo-preco-prazo": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx",
-    "rastreamento": "http://webservice.correios.com.br/service/rastro",
-    "sigep": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente",
-    "logistica": "http://webservicescol.correios.com.br/ScolWeb/WebServiceScol"
+  "rastreamento": {
+    "homologacao": "http://webservice.correios.com.br/service/rastro",
+    "producao": "http://webservice.correios.com.br/service/rastro"
+  },
+  "sigep": {
+    "homologacao": "https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente",
+    "producao": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
+  },
+  "logistica": {
+    "homologacao": "http://webservicescolhomologacao.correios.com.br/ScolWeb/WebServiceScol",
+    "producao": "http://webservicescol.correios.com.br/ScolWeb/WebServiceScol"
   }
 }
