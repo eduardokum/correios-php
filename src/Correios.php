@@ -83,7 +83,7 @@ abstract class Correios
     /**
      * @return ConfigContract
      */
-    protected function getConfig()
+    public function getConfig()
     {
         return $this->config;
     }
@@ -91,7 +91,7 @@ abstract class Correios
     /**
      * @return Soap
      */
-    protected function getSoap()
+    public function getSoap()
     {
         return $this->soap;
     }

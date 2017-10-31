@@ -2,7 +2,9 @@
 namespace Eduardokum\CorreiosPhp;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
+use Eduardokum\CorreiosPhp\Entity\PostalObject;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
+use Eduardokum\CorreiosPhp\Service\Plp;
 
 class Sigep extends Correios
 {
@@ -10,33 +12,6 @@ class Sigep extends Correios
     {
         parent::__construct($config, $type);
         $this->setWs($this->getWs('sigep'));
-    }
-
-    /**
-     * @param $tag
-     *
-     * @return string
-     * @throws InvalidArgumentException
-     */
-    private function calculateDv($tag)
-    {
-        $prefix = substr($tag, 0, 2);
-        $number = preg_replace('/[^0-9]/', '', $tag);
-        $sufix = substr($tag, -2);
-
-        if (strlen($tag) < 12 || strlen($number) != 8) {
-            throw new InvalidArgumentException("Invalid tag '$tag'");
-        }
-
-        $chars = str_split($number, 1);
-        $sums = str_split("86423597", 1);
-        $sum = 0;
-        foreach ($chars as $i => $char) {
-            $sum += $char * $sums[$i];
-        }
-        $rest = $sum % 11;
-        $dv = $rest == 0 ? '5' : ( $rest == 1 ? 0 : 11 - $rest );
-        return vsprintf('%s%s%s%s', [$prefix, $number, $dv, $sufix]);
     }
 
     /**
@@ -144,7 +119,38 @@ class Sigep extends Correios
         $tags = explode(',', $result->return);
         $result = [];
         foreach ($tags as $i => $tag) {
-            $result[$tag] = $this->calculateDv($tag);
+            $result[$tag] = PostalObject::calculateDv($tag);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param Plp $plp
+     *
+     * @return array
+     */
+    public function fechaPlpVariosServicos(Plp $plp)
+    {
+        $request = '<cli:fechaPlpVariosServicos>';
+        $request .= sprintf('<xml>%s</xml>', $plp->save($this->getConfig()));
+        $request .= sprintf('<idPlpCliente>%s</idPlpCliente>', '1');
+        $request .= sprintf('<cartaoPostagem>%s</cartaoPostagem>', $this->getConfig()->getPostCard());
+        foreach ($plp->getTags() as $tag) {
+            $request .= sprintf('<listaEtiquetas>%s</listaEtiquetas>', $tag);
+        }
+        $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUser());
+        $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPassword());
+        $request .= '</cli:fechaPlpVariosServicos>';
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+
+        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $tags = explode(',', $result->return);
+        $result = [];
+        foreach ($tags as $i => $tag) {
+            $result[$tag] = PostalObject::calculateDv($tag);
         }
 
         return $result;

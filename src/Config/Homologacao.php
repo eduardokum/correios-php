@@ -2,78 +2,34 @@
 namespace Eduardokum\CorreiosPhp\Config;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
+use Eduardokum\CorreiosPhp\Entity\Sender;
 
-class Homologacao implements ConfigContract
+class Homologacao extends Config implements ConfigContract
 {
-    private $environment = 'homologacao';
-    private $cnpj = '34028316000103';
-    private $user = 'sigep';
-    private $password = 'n5f9t8';
-    private $administrativeCode = '08082650';
-    private $contract = '9912208555';
-    private $postCard = '0057018901';
-    private $serviceCode = '41076';
+    public function __construct()
+    {
+        parent::__construct();
+        $this->environment = 'homologacao';
+        $this->cnpj = '34028316000103';
+        $this->user = 'sigep';
+        $this->password = 'n5f9t8';
+        $this->administrativeCode = '08082650';
+        $this->contract = '9912208555';
+        $this->postCard = '0057018901';
+        $this->serviceCode = '41076';
+        $this->direction = '36';
 
-    /**
-     * @return string
-     */
-    public function getEnvironment()
-    {
-        return $this->environment;
-    }
-    /**
-     * @return string
-     */
-    public function getCNPJ()
-    {
-        return $this->cnpj;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAdministrativeCode()
-    {
-        return $this->administrativeCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContract()
-    {
-        return $this->contract;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPostCard()
-    {
-        return $this->postCard;
-    }
-
-    /**
-     * @return string
-     */
-    public function getServiceCode()
-    {
-        return $this->serviceCode;
+        $this->setSender(Sender::create([
+            'name' => 'Empresa Ltda',
+            'street' => 'Avenida Central',
+            'number' => '2370',
+            'complement' => 'sala 1205,12° andar',
+            'district' => 'Centro',
+            'cep' => '70002900',
+            'city' => 'Brasília',
+            'state' => 'PR',
+            'phone' => '6112345008',
+            'mail' => 'cli@mail.com.br',
+        ]));
     }
 }

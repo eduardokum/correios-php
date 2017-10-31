@@ -1,6 +1,8 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Contracts\Config;
 
+use Eduardokum\CorreiosPhp\Entity\Sender;
+
 interface Config
 {
     public function getEnvironment();
@@ -11,4 +13,10 @@ interface Config
     public function getContract();
     public function getPostCard();
     public function getServiceCode();
+    public function getDirection();
+
+    /**
+     * @return Sender
+     */
+    public function getSender();
 }

@@ -19,7 +19,7 @@ class SoapNull extends Soap implements SoapContract
             sprintf('Content-length: %s', strlen($request)),
         ]);
 
-        var_dump($result);
+        print_r($result);
         die;
     }
 }

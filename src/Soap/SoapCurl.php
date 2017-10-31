@@ -26,6 +26,9 @@ class SoapCurl extends Soap implements SoapContract
                 curl_setopt($curl, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
             }
         }
+//        header("Content-type: text/xml");
+//        echo $request;
+//        die;
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->soapTimeout);
