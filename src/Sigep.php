@@ -2,7 +2,7 @@
 namespace Eduardokum\CorreiosPhp;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entity\PostalObject;
+use Eduardokum\CorreiosPhp\Entities\PostalObject;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
 use Eduardokum\CorreiosPhp\Service\Plp;
 
@@ -12,6 +12,11 @@ class Sigep extends Correios
     {
         parent::__construct($config, $type);
         $this->setWs($this->getWs('sigep'));
+
+        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+            $this->getConfig()->setUser('sigep');
+            $this->getConfig()->setPassword('n5f9t8');
+        }
     }
 
     /**
@@ -34,8 +39,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'verificaDisponibilidadeServico',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->return;
     }
 
@@ -53,8 +62,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'buscaCliente',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->return;
     }
 
@@ -71,8 +84,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'consultaCEP',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->return;
     }
 
@@ -89,8 +106,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'getStatusCartaoPostagem',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->return;
     }
 
@@ -114,8 +135,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'solicitaEtiquetas',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         $tags = explode(',', $result->return);
         $result = [];
         foreach ($tags as $i => $tag) {
@@ -134,7 +159,7 @@ class Sigep extends Correios
     {
         $request = '<cli:fechaPlpVariosServicos>';
         $request .= sprintf('<xml>%s</xml>', $plp->save($this->getConfig()));
-        $request .= sprintf('<idPlpCliente>%s</idPlpCliente>', '1');
+        $request .= sprintf('<idPlpCliente>%s</idPlpCliente>', $plp->getId());
         $request .= sprintf('<cartaoPostagem>%s</cartaoPostagem>', $this->getConfig()->getPostCard());
         foreach ($plp->getTags() as $tag) {
             $request .= sprintf('<listaEtiquetas>%s</listaEtiquetas>', $tag);
@@ -145,8 +170,12 @@ class Sigep extends Correios
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];
+        $actions = [
+            'curl' => null,
+            'native' => 'fechaPlpVariosServicos',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), null, $request, $namespaces);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         $tags = explode(',', $result->return);
         $result = [];
         foreach ($tags as $i => $tag) {
@@ -154,5 +183,29 @@ class Sigep extends Correios
         }
 
         return $result;
+    }
+
+    /**
+     * @param $plpId
+     *
+     * @return array
+     */
+    public function solicitaXmlPlp($plpId)
+    {
+        $request = '<cli:solicitaXmlPlp>';
+        $request .= sprintf('<idPlpMaster>%s</idPlpMaster>', $plpId);
+        $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUser());
+        $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPassword());
+        $request .= '</cli:solicitaXmlPlp>';
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+        $actions = [
+            'curl' => null,
+            'native' => 'solicitaXmlPlp',
+        ];
+
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
+        return $result->xml;
     }
 }

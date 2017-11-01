@@ -2,10 +2,26 @@
 namespace Eduardokum\CorreiosPhp\Service;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entity\PostalObject;
+use Eduardokum\CorreiosPhp\Entities\PostalObject;
 
 class Plp
 {
+
+    /**
+     * @var int
+     */
+    private $id = 1;
+
+    /**
+     * Plp constructor.
+     *
+     * @param $id
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * @var PostalObject[]
      */
@@ -38,6 +54,19 @@ class Plp
         return $this->tags;
     }
 
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param ConfigContract $config
+     *
+     * @return string
+     */
     public function save(ConfigContract $config)
     {
         $this->dom = new \DOMDocument('1.0', 'ISO-8859-1');
@@ -58,7 +87,9 @@ class Plp
             $objeto_postal->appendChild($this->dimensao($object));
         }
 
-        return $this->dom->saveXML($correioslog);
+//        return $this->dom->saveXML($correioslog);
+        $this->dom->appendChild($correioslog);
+        return htmlentities(utf8_encode($this->dom->saveXML()));
     }
 
     /**

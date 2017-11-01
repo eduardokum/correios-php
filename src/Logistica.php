@@ -9,5 +9,10 @@ class Logistica extends Correios
     {
         parent::__construct($config, $type);
         $this->setWs($this->getWs('logistica'));
+
+        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+            $this->getConfig()->setUser('60618043');
+            $this->getConfig()->setPassword('8o8otn');
+        }
     }
 }

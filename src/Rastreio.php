@@ -9,6 +9,11 @@ class Rastreio extends Correios
     {
         parent::__construct($config, $type);
         $this->setWs($this->getWs('rastreamento'));
+
+        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+            $this->getConfig()->setUser('ECT');
+            $this->getConfig()->setPassword('SRO');
+        }
     }
 
     /**
@@ -18,12 +23,9 @@ class Rastreio extends Correios
      */
     public function rastreamento(array $codes)
     {
-        $user = $this->getConfig()->getEnvironment() == 'homologacao' ? 'ECT' : $this->getConfig()->getUser();
-        $pass = $this->getConfig()->getEnvironment() == 'homologacao' ? 'SRO' : $this->getConfig()->getPassword();
-
         $request = '<res:buscaEventosLista>';
-        $request .= sprintf('<usuario>%s</usuario>', $user);
-        $request .= sprintf('<senha>%s</senha>', $pass);
+        $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUser());
+        $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPassword());
         $request .= sprintf('<tipo>%s</tipo>', 'L');
         $request .= sprintf('<resultado>%s</resultado>', 'T');
         $request .= sprintf('<lingua>%s</lingua>', '101');
@@ -34,7 +36,12 @@ class Rastreio extends Correios
         $namespaces = [
             'xmlns:res' => 'http://resource.webservice.correios.com.br/',
         ];
-        $result = $this->getSoap()->send($this->url(), 'buscaEventosLista', $request, $namespaces);
+        $actions = [
+            'curl' => 'buscaEventosLista',
+            'native' => 'buscaEventosLista',
+        ];
+
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->return;
     }
 }

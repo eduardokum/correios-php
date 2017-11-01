@@ -1,58 +1,22 @@
 <?php
-namespace Eduardokum\CorreiosPhp\Entity;
+namespace Eduardokum\CorreiosPhp\Entities;
 
-use Eduardokum\CorreiosPhp\MagicTrait;
+use Eduardokum\CorreiosPhp\Traits\MagicTrait;
 
-class Recipient
+class Sender
 {
     use MagicTrait;
 
-    private $national = 1;
     private $name;
-    private $phone;
-    private $cellphone;
-    private $mail;
     private $street;
     private $number;
     private $complement;
     private $district;
+    private $cep;
     private $city;
     private $state;
-    private $cep;
-
-    /**
-     * @return $this
-     */
-    public function national()
-    {
-        $this->national = 1;
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function international()
-    {
-        $this->national = 0;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isNational()
-    {
-        return $this->national;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isInternational()
-    {
-        return !$this->national;
-    }
+    private $phone;
+    private $mail;
 
     /**
      * @return mixed
@@ -65,71 +29,11 @@ class Recipient
     /**
      * @param mixed $name
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param mixed $phone
-     *
-     * @return Recipient
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCellphone()
-    {
-        return $this->cellphone;
-    }
-
-    /**
-     * @param mixed $cellphone
-     *
-     * @return Recipient
-     */
-    public function setCellphone($cellphone)
-    {
-        $this->cellphone = $cellphone;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMail()
-    {
-        return $this->mail;
-    }
-
-    /**
-     * @param mixed $mail
-     *
-     * @return Recipient
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
 
         return $this;
     }
@@ -145,7 +49,7 @@ class Recipient
     /**
      * @param mixed $street
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setStreet($street)
     {
@@ -165,7 +69,7 @@ class Recipient
     /**
      * @param mixed $number
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setNumber($number)
     {
@@ -185,7 +89,7 @@ class Recipient
     /**
      * @param mixed $complement
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setComplement($complement)
     {
@@ -205,11 +109,31 @@ class Recipient
     /**
      * @param mixed $district
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setDistrict($district)
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCep()
+    {
+        return $this->cep;
+    }
+
+    /**
+     * @param mixed $cep
+     *
+     * @return Sender
+     */
+    public function setCep($cep)
+    {
+        $this->cep = $cep;
 
         return $this;
     }
@@ -225,7 +149,7 @@ class Recipient
     /**
      * @param mixed $city
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setCity($city)
     {
@@ -245,7 +169,7 @@ class Recipient
     /**
      * @param mixed $state
      *
-     * @return Recipient
+     * @return Sender
      */
     public function setState($state)
     {
@@ -257,19 +181,39 @@ class Recipient
     /**
      * @return mixed
      */
-    public function getCep()
+    public function getPhone()
     {
-        return $this->cep;
+        return $this->phone;
     }
 
     /**
-     * @param mixed $cep
+     * @param mixed $phone
      *
-     * @return Recipient
+     * @return Sender
      */
-    public function setCep($cep)
+    public function setPhone($phone)
     {
-        $this->cep = $cep;
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * @param mixed $mail
+     *
+     * @return Sender
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
 
         return $this;
     }

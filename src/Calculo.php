@@ -43,8 +43,8 @@ class Calculo extends Correios
      */
     public function calcularPrecoPrazo(
         $service,
-        $cepFrom,
         $cepTo,
+        $cepFrom = null,
         $weight = 1,
         $format = 1,
         $length = 16,
@@ -68,6 +68,8 @@ class Calculo extends Correios
             throw new InvalidArgumentException('Width less than 11cm is not accepted');
         }
 
+        $cepFrom = $cepFrom ?: $this->getConfig()->getSender()->getCep();
+
         $request = '<CalcPrecoPrazo xmlns="http://tempuri.org/">';
         $request .= sprintf('<nCdEmpresa>%s</nCdEmpresa>', $this->getConfig()->getAdministrativeCode());
         $request .= sprintf('<sDsSenha>%s</sDsSenha>', $this->getConfig()->getPassword());
@@ -84,8 +86,13 @@ class Calculo extends Correios
         $request .= sprintf('<nVlValorDeclarado>%s</nVlValorDeclarado>', $price);
         $request .= sprintf('<sCdAvisoRecebimento>%s</sCdAvisoRecebimento>', $ar ? 'S' : 'N');
         $request .= '</CalcPrecoPrazo>';
+        $namespaces = [];
+        $actions = [
+            'curl' => 'http://tempuri.org/CalcPrecoPrazo',
+            'native' => 'http://tempuri.org/CalcPrecoPrazo',
+        ];
 
-        $result = $this->getSoap()->send($this->url(), 'http://tempuri.org/CalcPrecoPrazo', $request);
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
 
         return $result->CalcPrecoPrazoResult;
     }

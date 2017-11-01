@@ -1,5 +1,5 @@
 <?php
-namespace Eduardokum\CorreiosPhp;
+namespace Eduardokum\CorreiosPhp\Traits;
 
 trait MagicTrait
 {

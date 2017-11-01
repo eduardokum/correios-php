@@ -1,8 +1,8 @@
 <?php
-namespace Eduardokum\CorreiosPhp\Entity;
+namespace Eduardokum\CorreiosPhp\Entities;
 
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
-use Eduardokum\CorreiosPhp\MagicTrait;
+use Eduardokum\CorreiosPhp\Traits\MagicTrait;
 
 class PostalObject
 {

@@ -1,8 +1,8 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Config;
 
-use Eduardokum\CorreiosPhp\Entity\Sender;
-use Eduardokum\CorreiosPhp\MagicTrait;
+use Eduardokum\CorreiosPhp\Entities\Sender;
+use Eduardokum\CorreiosPhp\Traits\MagicTrait;
 
 abstract class Config
 {

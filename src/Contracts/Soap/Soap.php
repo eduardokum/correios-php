@@ -36,11 +36,11 @@ interface Soap
 
     /**
      * @param        $url
-     * @param string $action
+     * @param array  $action
      * @param string $request
      * @param array  $namespaces
      *
      * @return mixed
      */
-    public function send($url, $action = '', $request = '', $namespaces = []);
+    public function send($url, array $action = [], $request = '', $namespaces = []);
 }

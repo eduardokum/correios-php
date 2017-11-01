@@ -2,7 +2,7 @@
 namespace Eduardokum\CorreiosPhp\Config;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entity\Sender;
+use Eduardokum\CorreiosPhp\Entities\Sender;
 
 class Homologacao extends Config implements ConfigContract
 {
@@ -11,8 +11,8 @@ class Homologacao extends Config implements ConfigContract
         parent::__construct();
         $this->environment = 'homologacao';
         $this->cnpj = '34028316000103';
-        $this->user = 'sigep';
-        $this->password = 'n5f9t8';
+        $this->user = null;
+        $this->password = null;
         $this->administrativeCode = '08082650';
         $this->contract = '9912208555';
         $this->postCard = '0057018901';

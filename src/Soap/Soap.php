@@ -102,13 +102,13 @@ abstract class Soap implements SoapContract
 
     /**
      * @param string $url
-     * @param string $action
+     * @param array  $action
      * @param string $request
      * @param array  $namespaces
      *
      * @return mixed
      */
-    abstract public function send($url, $action = '', $request = '', $namespaces = []);
+    abstract public function send($url, array $action = [], $request = '', $namespaces = []);
 
     /**
      * Mount soap envelope
@@ -161,5 +161,4 @@ abstract class Soap implements SoapContract
         $response = json_encode($response, JSON_PRETTY_PRINT);
         return json_decode($response);
     }
-
 }
