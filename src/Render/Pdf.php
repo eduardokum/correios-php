@@ -185,7 +185,7 @@ class Pdf
                 $this->tcpdf->addPage();
             }
         }
-        $this->tcpdf->Output('example_050.pdf', 'I');
+        $this->tcpdf->Output('etiquetas.pdf', 'I');
     }
 
     /**
