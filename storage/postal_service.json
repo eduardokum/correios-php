@@ -1,0 +1,137 @@
+{
+  "41068": {
+    "key":   "pac",
+    "name": "Pac [41068]",
+    "id": 109819
+  },
+  "04510": {
+    "key":   "pac",
+    "name": "Pac [04510]",
+    "id": 110353
+  },
+  "41211": {
+    "key":   "pac",
+    "name": "Pac [41211]",
+    "id": 113546
+  },
+  "04693": {
+    "key":   "pac",
+    "name": "Pac grandes formatos [04693]",
+    "id": 120366
+  },
+  "41610": {
+    "key":   "pac",
+    "name": "Pac remessa agrupada [41610]",
+    "id": 121889
+  },
+  "81019": {
+    "key":   "sedex",
+    "name": "E-Sedex [81019]",
+    "id": 104672
+  },
+  "40096": {
+    "key":   "sedex",
+    "name": "Sedex 40096 [40096]",
+    "id": 104625
+  },
+  "40436": {
+    "key":   "sedex",
+    "name": "Sedex [40436]",
+    "id": 109810
+  },
+  "40444": {
+    "key":   "sedex",
+    "name": "Sedex [40444]",
+    "id": 109811
+  },
+  "40169": {
+    "key":   "sedex_10",
+    "name": "Sedex 12 [40169]",
+    "id": 115218
+  },
+  "40215": {
+    "key":   "sedex_10",
+    "name": "Sedex 10 [40215]",
+    "id": 104707
+  },
+  "40886": {
+    "key":   "sedex_10",
+    "name": "Sedex 10 pacote [40886]",
+    "id": null
+  },
+  "40290": {
+    "key":   "sedex_10",
+    "name": "Sedex hoje [40290]",
+    "id": 108934
+  },
+  "40878": {
+    "key":   "sedex_10",
+    "name": "Sedex Hoje [40878]",
+    "id": null
+  },
+  "04014": {
+    "key":   "sedex",
+    "name": "Sedex à vista [04014]",
+    "id": 104295
+  },
+  "40045": {
+    "key":   "sedex",
+    "name": "Sedex varejo à cobrar [40045]",
+    "id": null
+  },
+  "41009": {
+    "key":   "sedex",
+    "name": "Sedex agrupado [41009]",
+    "id": 119461
+  },
+  "40380": {
+    "key":   "sedex",
+    "name": "Sedex reverso [40380]",
+    "id": 109806
+  },
+  "04189": {
+    "key":   "sedex",
+    "name": "Sedex pagamento na entrega [04189]",
+    "id": 114976
+  },
+  "04685": {
+    "key":   "pac",
+    "name": "Pac pagamento na entrega [04685]",
+    "id": 114976
+  },
+  "10065": {
+    "key":   "carta",
+    "name": "Carta comercial à faturar [10065]",
+    "id": 109480
+  },
+  "10014": {
+    "key":   "carta",
+    "name": "Carta registrada [10014]",
+    "id": 116985
+  },
+  "10707": {
+    "key":   "carta",
+    "name": "Carta Comercial Registrada [10707]",
+    "id": 120072
+  },
+  "04162": {
+    "key":   "sedex",
+    "name": "Sedex contrato agência [04162]",
+    "id": 124849
+  },
+  "04669": {
+    "key":   "pac",
+    "name": "Pac contrato agência [04669]",
+    "id": 124884
+  },
+  "04170": {
+    "key":   "sedex",
+    "name": "Sedex reverso contrato agência [04170]",
+    "id": 124849
+  },
+  "04677": {
+    "key":   "pac",
+    "name": "Pac reverso contrato agência [04677]",
+    "id": 124884
+  }
+}

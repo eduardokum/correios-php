@@ -1,0 +1,57 @@
+{
+  "001": {
+    "initials": "AR",
+    "name":  "Aviso de Recebimento",
+    "code":  "001"
+  },
+  "002": {
+    "initials": "MP",
+    "name":  "Mão Própria Nacional",
+    "code":  "002"
+  },
+  "019": {
+    "initials": "VD",
+    "name":  "Valor Declarado Nacional (Encomendas)",
+    "code":  "019"
+  },
+  "025":  {
+    "initials": null,
+    "name":  "Registro Nacional",
+    "code":  ""
+  },
+  "035": {
+    "initials": "VD",
+    "name":  "Carta Registrada com Valor Declarado",
+    "code":  "035"
+  },
+  "037": {
+    "initials": "AR",
+    "name":  "Aviso de Recebimento Digital",
+    "code":  "037"
+  },
+  "047": {
+    "initials": null,
+    "name":  "Grandes Formatos (PAC GF)",
+    "code":  "047"
+  },
+  "049": {
+    "initials": "DD",
+    "name":  "Devolução de Nota Fiscal - SEDEX",
+    "code":  "049"
+  },
+  "057": {
+    "initials": null,
+    "name":  "Taxa de Entrega de Encomenda Despadronizada",
+    "code":  "057"
+  },
+  "067": {
+    "initials": null,
+    "name":  "Logística Reversa Simultânea Domiciliária",
+    "code":  "067"
+  },
+  "069": {
+    "initials": null,
+    "name":  "Logística Reversa Simultânea em Agência",
+    "code":  "069"
+  }
+}

@@ -1,10 +1,11 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Entities;
 
+use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
 use Eduardokum\CorreiosPhp\Traits\MagicTrait;
 
-class PostalObject
+class PostalObject implements PrintableContract
 {
     use MagicTrait;
 
@@ -15,11 +16,13 @@ class PostalObject
     private $weight;
     private $postalUserCode;
     private $costCenter;
+    private $orderNumber;
     private $invoiceNumber;
     private $invoiceSeries;
     private $invoiceValue;
     private $description;
     private $valueCharge;
+    private $valueDeclared = 0;
     private $length;
     private $height;
     private $width;
@@ -27,6 +30,8 @@ class PostalObject
     private $additionalService = ['025' => '025'];
     private $type = '002';
     private $recipient;
+    private $model = PrintableContract::MODEL_SINGLE;
+    private $size = PrintableContract::SIZE_SMALL;
 
     public function __construct()
     {
@@ -93,6 +98,14 @@ class PostalObject
     {
         $this->additionalService['001'] = '001';
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdditionalServices()
+    {
+        return $this->additionalService;
     }
 
     /**
@@ -279,6 +292,26 @@ class PostalObject
     /**
      * @return mixed
      */
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * @param mixed $orderNumber
+     *
+     * @return PostalObject
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getInvoiceSeries()
     {
         return $this->invoiceSeries;
@@ -352,6 +385,26 @@ class PostalObject
     public function setValueCharged($valueCharge)
     {
         $this->valueCharge = $valueCharge;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValueDeclared()
+    {
+        return $this->valueDeclared;
+    }
+
+    /**
+     * @param mixed $valueDeclared
+     *
+     * @return PostalObject
+     */
+    public function setValueDeclared($valueDeclared)
+    {
+        $this->valueDeclared = $valueDeclared;
 
         return $this;
     }
@@ -434,6 +487,52 @@ class PostalObject
         $this->diameter = $diameter;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param $model
+     *
+     * @return $this
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param $size
+     *
+     * @return $this
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toPrint()
+    {
+        return [$this];
     }
 
     /**

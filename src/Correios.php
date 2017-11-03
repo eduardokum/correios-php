@@ -27,7 +27,7 @@ abstract class Correios
     {
         $this->config = $config ?: new Homologacao();
         $this->makeSoap($type);
-        $webservices = realpath(__DIR__ . '/storage/') . '/webservices.json';
+        $webservices = realpath(CORREIOS_PHP_BASE) . '/storage/webservices.json';
         $this->setWs(json_decode(file_get_contents($webservices)));
     }
 

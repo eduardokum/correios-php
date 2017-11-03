@@ -4,7 +4,7 @@ namespace Eduardokum\CorreiosPhp;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
-use Eduardokum\CorreiosPhp\Service\Plp;
+use Eduardokum\CorreiosPhp\Entities\Plp;
 
 class Sigep extends Correios
 {

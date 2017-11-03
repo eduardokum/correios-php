@@ -1,10 +1,11 @@
 <?php
-namespace Eduardokum\CorreiosPhp\Service;
+namespace Eduardokum\CorreiosPhp\Entities;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entities\PostalObject;
+use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
+use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
 
-class Plp
+class Plp implements PrintableContract
 {
 
     /**
@@ -38,10 +39,24 @@ class Plp
     private $dom;
 
     /**
+     * @var string
+     */
+    private $model = PrintableContract::MODEL_MULTIPLE;
+
+    /**
+     * @var string
+     */
+    private $size = PrintableContract::SIZE_SMALL;
+
+    /**
      * @param PostalObject $postalObject
      */
     public function addObject(PostalObject $postalObject)
     {
+        if (in_array($postalObject->getTag(), $this->tags)) {
+            throw new InvalidArgumentException(sprintf("Tag '%s' already added", $postalObject->getTagDv()));
+        }
+
         $this->tags[] = $postalObject->getTag();
         $this->objects[] = $postalObject;
     }
@@ -90,6 +105,52 @@ class Plp
 //        return $this->dom->saveXML($correioslog);
         $this->dom->appendChild($correioslog);
         return htmlentities(utf8_encode($this->dom->saveXML()));
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param $model
+     *
+     * @return $this
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param $size
+     *
+     * @return $this
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toPrint()
+    {
+        return $this->objects;
     }
 
     /**
@@ -260,11 +321,6 @@ class Plp
     private function nacional(PostalObject $object)
     {
         if ($object->getRecipient()->isNational()) {
-//            $destinatario->appendChild(
-//                $nome_destinatario = $this->dom->createElement('nome_destinatario')
-//            );
-//            $nome_destinatario->appendChild($this->dom->createCDATASection($object->getRecipient()->getName()));
-
             $nacional = $this->dom->createElement('nacional');
             $nacional->appendChild(
                 $bairro_destinatario = $this->dom->createElement('bairro_destinatario')

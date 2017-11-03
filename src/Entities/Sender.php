@@ -7,6 +7,7 @@ class Sender
 {
     use MagicTrait;
 
+    private $logo;
     private $name;
     private $street;
     private $number;
@@ -17,6 +18,26 @@ class Sender
     private $state;
     private $phone;
     private $mail;
+
+    /**
+     * @return mixed
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param mixed $logo
+     *
+     * @return Sender
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
 
     /**
      * @return mixed

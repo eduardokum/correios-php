@@ -2,8 +2,10 @@
 namespace Eduardokum\CorreiosPhp\Soap;
 
 use Eduardokum\CorreiosPhp\Contracts\Soap\Soap as SoapContract;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
-class SoapNull extends Soap implements SoapContract
+class SoapDebug extends Soap implements SoapContract
 {
     public function send($url, array $action = [], $request = '', $namespaces = [])
     {
@@ -19,7 +21,7 @@ class SoapNull extends Soap implements SoapContract
             sprintf('Content-length: %s', strlen($request)),
         ]);
 
-        print_r($result);
+        (new HtmlDumper())->dump((new VarCloner())->cloneVar($result));
         die;
     }
 }
