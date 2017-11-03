@@ -114,7 +114,8 @@ class Pdf
         $this->tcpdf->SetSubject('Etiquetas');
         $this->tcpdf->SetKeywords('Etiquetas');
         $this->tcpdf->SetAutoPageBreak(false, 0);
-        $this->tcpdf->SetFontSize(9);
+        $fontname = \TCPDF_FONTS::addTTFfont(CORREIOS_PHP_BASE . '/storage/fonts/Arial.ttf', 'TrueTypeUnicode', '', 96);
+        $this->tcpdf->SetFont($fontname, '', 9, '', false);
     }
 
     /**
@@ -198,8 +199,6 @@ class Pdf
     }
 
     /**
-     * @param $size
-     *
      * @return array
      */
     private function getTagSize()
@@ -315,7 +314,6 @@ class Pdf
     }
 
     /**
-     * @param $tag
      * @param $x
      * @param $y
      */
@@ -360,29 +358,23 @@ class Pdf
         $x += 33;
 
         $this->tcpdf->SetXY($x, $y);
+        $this->tcpdf->Write(3, 'NF: ');
+        $this->writeBold(3, $tag->getInvoiceNumber());
+        $y += 3;
+
+        $this->tcpdf->SetXY($x, $y);
+        $this->tcpdf->Write(3, 'Pedido: ');
+        $this->writeBold(3, $tag->getOrderNumber());
+        $y += 3;
+
+        $this->tcpdf->SetXY($x, $y);
         $this->tcpdf->Write(3, 'Volume ');
         $this->tcpdf->Write(3, '1/1');
         $y += 3;
 
-        if ($tag->getInvoiceNumber()) {
-            $this->tcpdf->SetXY($x, $y);
-            $this->tcpdf->Write(3, 'NF: ');
-            $this->writeBold(3, $tag->getInvoiceNumber());
-            $y += 3;
-        }
-
-        if ($tag->getOrderNumber()) {
-            $this->tcpdf->SetXY($x, $y);
-            $this->tcpdf->Write(3, 'Pedido: ');
-            $this->writeBold(3, $tag->getOrderNumber());
-            $y += 3;
-        }
-
-        if ($tag->getWeight()) {
-            $this->tcpdf->SetXY($x, $y);
-            $this->tcpdf->Write(3, 'Peso (g): ');
-            $this->writeBold(3, $tag->getWeight());
-        }
+        $this->tcpdf->SetXY($x, $y);
+        $this->tcpdf->Write(3, 'Peso (g): ');
+        $this->writeBold(3, $tag->getWeight());
     }
 
     /**
@@ -537,14 +529,14 @@ class Pdf
             $h = 4;
             $hTitle = 5;
             $x += 5;
-            $yAdd = 20;
+            $yAdd = 21;
         } else {
             $this->tcpdf->Line($xDefault - 1, $y, $x + $this->getTagWidth() - 1, $y);
             $this->tcpdf->Line($xDefault - 1, $y + 20, $x + $this->getTagWidth() - 1, $y + 20);
             $this->tcpdf->write1DBarcode($tag->getRecipient()->getCep(), 'C128', $x + 55, $y + 1, 40, 18, null, $style);
             $h = 3;
             $hTitle = 5;
-            $yAdd = 0;
+            $yAdd = -1;
         }
 
         $this->tcpdf->Rect($xDefault - 1, $y, 40, $hTitle, 'DF', [], [0,0,0]);
