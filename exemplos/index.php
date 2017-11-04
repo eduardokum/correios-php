@@ -183,16 +183,12 @@ $o7 = \Eduardokum\CorreiosPhp\Entities\PostalObject::create([
 $o7->addServiceNoticeReceipt();
 
 
-$plp = new \Eduardokum\CorreiosPhp\Entities\Plp(1);
+$plp = new \Eduardokum\CorreiosPhp\Entities\Plp(33619);
 $plp->addObject($o);
 $plp->addObject($o2);
-$plp->addObject($o3);
-$plp->addObject($o4);
 $plp->addObject($o5);
-$plp->addObject($o6);
-$plp->addObject($o7);
 
-$r = new Eduardokum\CorreiosPhp\Render\NoticeReceipt($plp);
+$r = new Eduardokum\CorreiosPhp\Render\DetailedListing($plp);
 $r->render();
 
 //$plp->addObject($o);

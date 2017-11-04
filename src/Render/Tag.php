@@ -1,7 +1,6 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Render;
 
-use Eduardokum\CorreiosPhp\Config\Homologacao;
 use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
@@ -27,11 +26,6 @@ class Tag extends Pdf
      * @var int
      */
     private $perPage = 1;
-
-    /**
-     * @var int
-     */
-    private $padding = 1;
 
     /**
      * @var array
@@ -74,15 +68,9 @@ class Tag extends Pdf
         PrintableContract::SIZE_SMALL => [101.6, 84.7],
     ];
 
-    /**
-     * @var ConfigContract
-     */
-    private $config;
-
     public function __construct(PrintableContract $printable, ConfigContract $config = null)
     {
-        parent::__construct();
-        $this->config = $config ?: new Homologacao();
+        parent::__construct($config);
         $this->additionalServices = json_decode(file_get_contents(CORREIOS_PHP_BASE . '/storage/additional_services.json'));
         $this->postalServices = json_decode(file_get_contents(CORREIOS_PHP_BASE . '/storage/postal_service.json'));
         $this->setPrintable($printable);
@@ -135,14 +123,6 @@ class Tag extends Pdf
     public function getPerPage()
     {
         return $this->perPage;
-    }
-
-    /**
-     * @return ConfigContract
-     */
-    public function getConfig()
-    {
-        return $this->config;
     }
 
     /**

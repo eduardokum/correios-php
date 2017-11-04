@@ -1,7 +1,6 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Render;
 
-use Eduardokum\CorreiosPhp\Config\Homologacao;
 use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
@@ -21,11 +20,6 @@ class NoticeReceipt extends Pdf
     private $perPage = 3;
 
     /**
-     * @var int
-     */
-    private $padding = 1;
-
-    /**
      * @var array
      */
     private $positions = [
@@ -41,15 +35,9 @@ class NoticeReceipt extends Pdf
      */
     private $noticeReceiptSize = [205, 95];
 
-    /**
-     * @var ConfigContract
-     */
-    private $config;
-
     public function __construct(PrintableContract $printable, ConfigContract $config = null)
     {
-        parent::__construct();
-        $this->config = $config ?: new Homologacao();
+        parent::__construct($config);
         $this->setPrintable($printable);
 
         $this->tcpdf = new \TCPDF(null, 'mm', 'A4', true, 'UTF-8');
@@ -74,14 +62,6 @@ class NoticeReceipt extends Pdf
     }
 
     /**
-     * @return ConfigContract
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
      * @return PrintableContract
      */
     public function getPrintable()
@@ -100,6 +80,9 @@ class NoticeReceipt extends Pdf
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function render()
     {
         $tags = $this->filterTags($this->getPrintable()->toPrint());
@@ -118,7 +101,7 @@ class NoticeReceipt extends Pdf
             $this->noticeReceipt($tag, $position);
         }
 
-        $this->tcpdf->Output('etiquetas.pdf', 'I');
+        return $this->tcpdf->Output('etiquetas.pdf', 'I');
     }
 
     /**

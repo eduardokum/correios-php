@@ -1,6 +1,9 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Render;
 
+use Eduardokum\CorreiosPhp\Config\Homologacao;
+use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
+
 abstract class Pdf
 {
     /**
@@ -8,15 +11,40 @@ abstract class Pdf
      */
     protected $tcpdf;
 
+    /**
+     * @var ConfigContract
+     */
+    protected $config;
+
+    /**
+     * @var int
+     */
+    protected $padding = 1;
+
+    /**
+     * @var mixed|string
+     */
     protected $fontRegular;
+
+    /**
+     * @var mixed|string
+     */
     protected $fontBold;
 
-    public function __construct()
+    public function __construct(ConfigContract $config = null)
     {
+        $this->config = $config ?: new Homologacao();
         $this->fontRegular = \TCPDF_FONTS::addTTFfont(CORREIOS_PHP_BASE . '/resources/assets/fonts/Arial.ttf', 'TrueTypeUnicode', '', 96);
         $this->fontBold = \TCPDF_FONTS::addTTFfont(CORREIOS_PHP_BASE . '/resources/assets/fonts/ArialBold.ttf', 'TrueTypeUnicode', '', 96);
     }
 
+    /**
+     * @return ConfigContract
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
 
     /**
      * @param        $h
