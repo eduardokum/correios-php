@@ -38,7 +38,7 @@ class Calculo extends Correios
      * @param int     $price
      * @param boolean $ar
      *
-     * @return mixed
+     * @return \stdClass
      * @throws InvalidArgumentException
      */
     public function calcularPrecoPrazo(

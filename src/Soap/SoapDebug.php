@@ -7,11 +7,11 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 class SoapDebug extends Soap implements SoapContract
 {
-    public function send($url, array $action = [], $request = '', $namespaces = [])
+    public function send($url, array $action = [], $request = '', $namespaces = [], $auth = [])
     {
         $result = new \stdClass();
         $result->args = func_get_args();
-        $result->request = $request = is_string($request) ? $this->envelop($request, $namespaces) : $request;
+        $result->request = $request = $this->envelop($request, $namespaces);
         $result->headers = array_filter([
             'Content-Type: text/xml;charset=utf-8',
             array_key_exists('curl', $action) && !empty(trim($action['curl'])) ? sprintf('SOAPAction: "%s"', $action['curl']) : null,

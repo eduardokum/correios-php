@@ -19,7 +19,7 @@ class Rastreio extends Correios
     /**
      * @param array $codes
      *
-     * @return mixed
+     * @return \stdClass
      */
     public function rastreamento(array $codes)
     {

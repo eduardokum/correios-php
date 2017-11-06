@@ -105,10 +105,11 @@ abstract class Soap implements SoapContract
      * @param array  $action
      * @param string $request
      * @param array  $namespaces
+     * @param array  $auth
      *
      * @return mixed
      */
-    abstract public function send($url, array $action = [], $request = '', $namespaces = []);
+    abstract public function send($url, array $action = [], $request = '', $namespaces = [], $auth = []);
 
     /**
      * Mount soap envelope

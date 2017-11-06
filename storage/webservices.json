@@ -12,7 +12,7 @@
     "producao": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente"
   },
   "logistica": {
-    "homologacao": "http://webservicescolhomologacao.correios.com.br/ScolWeb/WebServiceScol",
-    "producao": "http://webservicescol.correios.com.br/ScolWeb/WebServiceScol"
+    "homologacao": "https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS",
+    "producao": "https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS"
   }
 }

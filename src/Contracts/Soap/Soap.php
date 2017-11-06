@@ -39,8 +39,9 @@ interface Soap
      * @param array  $action
      * @param string $request
      * @param array  $namespaces
+     * @param array  $auth
      *
      * @return mixed
      */
-    public function send($url, array $action = [], $request = '', $namespaces = []);
+    public function send($url, array $action = [], $request = '', $namespaces = [], $auth = []);
 }

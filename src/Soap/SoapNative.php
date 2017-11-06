@@ -7,11 +7,11 @@ use Eduardokum\CorreiosPhp\Exception\SoapException;
 
 class SoapNative extends Soap implements SoapContract
 {
-    public function send($url, array $action = [], $request = '', $namespaces = [])
+    public function send($url, array $action = [], $request = '', $namespaces = [], $auth = [])
     {
-        $this->request = $request = is_string($request) ? $this->envelop($request, $namespaces) : $request;
+        $this->request = $request = $this->xmlToStd($this->envelop($request, $namespaces));
         $params     = [
-            'encoding'           => 'ISO-8859-1',
+            'encoding'           => 'UTF-8',
             'verifypeer'         => false,
             'verifyhost'         => false,
             'soap_version'       => SOAP_1_1,
@@ -19,6 +19,11 @@ class SoapNative extends Soap implements SoapContract
             'exceptions'         => 0,
             "connection_timeout" => $this->soapTimeout,
         ];
+
+        if (array_key_exists('user', $auth) && array_key_exists('user', $auth)) {
+            $params['login'] = $auth['user'];
+            $params['password'] = $auth['password'];
+        }
 
         if (!array_key_exists('native', $action)) {
             throw new InvalidArgumentException('action for native not defined.');
@@ -41,6 +46,28 @@ class SoapNative extends Soap implements SoapContract
                 $response->faultstring,
             ]);
         }
-        throw new SoapException('Method not implemented yet');
+        return $response;
+    }
+
+    /**
+     * @param $xml
+     *
+     * @return \stdClass
+     */
+    private function xmlToStd($xml)
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = false;
+        $dom->loadXML($xml);
+
+        $response = $dom->getElementsByTagName('Body')
+            ->item(0) // Get Body
+            ->childNodes->item(0); // Get Result Object;
+        $response = $dom->saveXML($response);
+        $response = preg_replace('/\<(\/?)\w+:(\w+\/?)\>/', '<$1$2>', $response);
+        $response  = simplexml_load_string($response);
+        $response = json_encode($response, JSON_PRETTY_PRINT);
+        return json_decode($response);
     }
 }

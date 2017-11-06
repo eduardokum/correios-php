@@ -49,7 +49,7 @@ class Sigep extends Correios
     }
 
     /**
-     * @return mixed
+     * @return \stdClass
      */
     public function buscaCliente()
     {
@@ -74,7 +74,7 @@ class Sigep extends Correios
     /**
      * @param $cep
      *
-     * @return mixed
+     * @return \stdClass
      */
     public function consultaCEP($cep)
     {
@@ -94,7 +94,7 @@ class Sigep extends Correios
     }
 
     /**
-     * @return string
+     * @return \stdClass
      */
     public function getStatusCartaoPostagem()
     {
@@ -119,7 +119,7 @@ class Sigep extends Correios
      * @param $service
      * @param $amount
      *
-     * @return array
+     * @return \stdClass
      * @throws InvalidArgumentException
      */
     public function solicitaEtiquetas($service, $amount)
@@ -153,7 +153,7 @@ class Sigep extends Correios
     /**
      * @param Plp $plp
      *
-     * @return array
+     * @return \stdClass
      */
     public function fechaPlpVariosServicos(Plp $plp)
     {
@@ -188,7 +188,7 @@ class Sigep extends Correios
     /**
      * @param $plpId
      *
-     * @return array
+     * @return \stdClass
      */
     public function solicitaXmlPlp($plpId)
     {
