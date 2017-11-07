@@ -218,7 +218,7 @@ class PostalObject implements PrintableContract
     }
 
     /**
-     * @param mixed $recipient
+     * @param Recipient $recipient
      *
      * @return PostalObject
      */
@@ -542,13 +542,16 @@ class PostalObject implements PrintableContract
      */
     public static function calculateDv($tag)
     {
-        $prefix = substr($tag, 0, 2);
-        $number = preg_replace('/[^0-9]/', '', $tag);
-        $sufix = substr($tag, -2);
-
-        if (strlen($tag) < 12 || strlen($number) != 8) {
+        if (!preg_match('/(?<prefix>[a-zA-Z]{2})?(?<number>[0-9]{8})(?<sufix>[a-zA-Z]{2})?/', $tag, $matches)) {
             throw new InvalidArgumentException("Invalid tag '$tag'");
         }
+
+        array_pop($matches);
+        $matches = array_filter($matches);
+
+        $prefix = isset($matches['prefix']) ? $matches['prefix'] : null;
+        $number = isset($matches['number']) ? $matches['number'] : null;
+        $sufix = isset($matches['sufix']) ? $matches['sufix'] : null;
 
         $chars = str_split($number, 1);
         $sums = str_split("86423597", 1);

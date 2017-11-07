@@ -119,7 +119,7 @@ class Sigep extends Correios
      * @param $service
      * @param $amount
      *
-     * @return \stdClass
+     * @return array
      * @throws InvalidArgumentException
      */
     public function solicitaEtiquetas($service, $amount)
