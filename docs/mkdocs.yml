@@ -1,0 +1,9 @@
+site_name: Correios Php
+pages:
+    - Get Started: GetStarted.md
+    - Sigep: Sigep.md
+    - Losgistica: Losgistica.md
+    - Rastreio: Rastreio.md
+    - Calculo: Calculo.md
+    - About: About.md
+theme: readthedocs
