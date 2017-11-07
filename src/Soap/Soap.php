@@ -43,13 +43,13 @@ abstract class Soap implements SoapContract
      */
     public $request;
     /**
-     * @var string
+     * @var mixed
      */
     public $soapError;
     /**
-     * @var array
+     * @var mixed
      */
-    public $soapInfo = [];
+    public $soapInfo;
 
     /**
      * Set debug mode, this mode will save soap envelopes in temporary directory

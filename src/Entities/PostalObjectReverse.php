@@ -59,20 +59,9 @@ class PostalObjectReverse
      */
     public function setTag($tag)
     {
-        preg_match('/(\D+)(\d+)(\D+)/', $tag, $matches);
-        if (strlen($matches[2]) == 8) {
-            $this->tag = $tag;
-            $this->tagDv = PostalObject::calculateDv($tag);
-        } elseif (strlen($matches[2]) == 9) {
-            $this->tag = vsprintf('%s%s%s', [
-                $matches[1],
-                substr($matches[2], 0, -1),
-                $matches[3],
-            ]);
-            $this->tagDv = $tag;
-        } else {
-            throw new InvalidArgumentException(sprintf("Tag '%s' is not acceptable.", $tag));
-        }
+        $tags = PostalObject::normalizeTag($tag);
+        $this->tag = $tags['tag'];
+        $this->tagDv = $tags['tagDv'];
 
         return $this;
     }

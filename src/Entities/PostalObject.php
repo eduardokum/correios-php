@@ -131,20 +131,9 @@ class PostalObject implements PrintableContract
      */
     public function setTag($tag)
     {
-        preg_match('/(\D+)(\d+)(\D+)/', $tag, $matches);
-        if (strlen($matches[2]) == 8) {
-            $this->tag = $tag;
-            $this->tagDv = self::calculateDv($tag);
-        } elseif (strlen($matches[2]) == 9) {
-            $this->tag = vsprintf('%s%s%s', [
-                $matches[1],
-                substr($matches[2], 0, -1),
-                $matches[3],
-            ]);
-            $this->tagDv = $tag;
-        } else {
-            throw new InvalidArgumentException(sprintf("Tag '%s' is not acceptable.", $tag));
-        }
+        $tags = self::normalizeTag($tag);
+        $this->tag = $tags['tag'];
+        $this->tagDv = $tags['tagDv'];
 
         return $this;
     }
@@ -542,18 +531,11 @@ class PostalObject implements PrintableContract
      */
     public static function calculateDv($tag)
     {
-        if (!preg_match('/(?<prefix>[a-zA-Z]{2})?(?<number>[0-9]{8})(?<sufix>[a-zA-Z]{2})?/', $tag, $matches)) {
+        if (!preg_match('/(?<prefix>\D{2})?(?<number>\d{8})(?<sufix>\D{2})?/', $tag, $matches)) {
             throw new InvalidArgumentException("Invalid tag '$tag'");
         }
-
-        array_pop($matches);
-        $matches = array_filter($matches);
-
-        $prefix = isset($matches['prefix']) ? $matches['prefix'] : null;
-        $number = isset($matches['number']) ? $matches['number'] : null;
-        $sufix = isset($matches['sufix']) ? $matches['sufix'] : null;
-
-        $chars = str_split($number, 1);
+        $matches += ['prefix' => null, 'sufix' => ''];
+        $chars = str_split($matches['number'], 1);
         $sums = str_split("86423597", 1);
         $sum = 0;
         foreach ($chars as $i => $char) {
@@ -561,6 +543,38 @@ class PostalObject implements PrintableContract
         }
         $rest = $sum % 11;
         $dv = $rest == 0 ? '5' : ( $rest == 1 ? 0 : 11 - $rest );
-        return vsprintf('%s%s%s%s', [$prefix, $number, $dv, $sufix]);
+        return vsprintf('%s%s%s%s', [$matches['prefix'], $matches['number'], $dv, $matches['sufix']]);
+    }
+
+    /**
+     * @param $tag
+     *
+     * @return array
+     */
+    public static function normalizeTag($tag)
+    {
+        if (!preg_match('/(?<prefix>\D{2})?(?<number>\d{8,9})(?<sufix>\D{2})?/', $tag, $matches)) {
+            throw new InvalidArgumentException(sprintf("Tag '%s' is not acceptable.", $tag));
+        }
+
+        $matches = array_filter($matches);
+        if (strlen($matches['number']) == 8) {
+            return [
+                'tag' => $tag,
+                'tagDv' => self::calculateDv($tag)
+            ];
+        }
+        if (strlen($matches['number']) == 9) {
+            return [
+                'tag' => vsprintf('%s%s%s', [
+                    $matches['prefix'],
+                    substr($matches['number'], 0, -1),
+                    $matches['sufix'],
+                ]),
+                'tagDv' => $tag,
+            ];
+        }
+
+        throw new InvalidArgumentException(sprintf("Tag '%s' is invalid.", $tag));
     }
 }

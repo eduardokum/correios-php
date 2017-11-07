@@ -90,10 +90,11 @@ class NoticeReceipt extends Pdf
         if (count($tags) == 0) {
             throw new InvalidArgumentException('No tags available for printing');
         }
-        $tagsCount = 0;
+
+        $noticeCount = 0;
         foreach ($tags as $tag) {
-            $tagsCount++;
-            $position = $rest = $tagsCount % $this->getPerPage();
+            $noticeCount++;
+            $position = $rest = $noticeCount % $this->getPerPage();
             $position = $position == 0 ? $this->getPerPage() : $position;
             if ($rest === 1) {
                 $this->tcpdf->addPage();
@@ -101,7 +102,7 @@ class NoticeReceipt extends Pdf
             $this->noticeReceipt($tag, $position);
         }
 
-        return $this->tcpdf->Output('etiquetas.pdf', 'I');
+        return $this->tcpdf->Output('notice_receipt.pdf', 'I');
     }
 
     /**

@@ -7,14 +7,14 @@ class SoapCurl extends Soap implements SoapContract
 {
     public function send($url, array $action = [], $request = '', $namespaces = [], $auth = [])
     {
-        $this->request = $request = $this->envelop($request, $namespaces);
+        $this->request = $this->envelop($request, $namespaces);
         $headers = array_filter([
             'Content-Type: text/xml;charset=utf-8',
             array_key_exists('curl', $action) && !empty(trim($action['curl'])) ? sprintf('SOAPAction: "%s"', $action['curl']) : null,
             'Accept: text/xml',
             'Cache-Control: no-cache',
             'Pragma: no-cache',
-            sprintf('Content-length: %s', strlen($request)),
+            sprintf('Content-length: %s', strlen($this->request)),
         ]);
         $curl = curl_init();
         if ($this->proxyIP != '') {
@@ -39,7 +39,7 @@ class SoapCurl extends Soap implements SoapContract
             curl_setopt($curl, CURLOPT_USERPWD, $auth['user'] . ":" . $auth['password']);
         }
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $this->request);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $this->response = $response = curl_exec($curl);
         $this->soapError = curl_error($curl);

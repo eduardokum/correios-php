@@ -9,7 +9,7 @@ class SoapNative extends Soap implements SoapContract
 {
     public function send($url, array $action = [], $request = '', $namespaces = [], $auth = [])
     {
-        $this->request = $request = $this->xmlToStd($this->envelop($request, $namespaces));
+        $this->request = $this->xmlToStd($this->envelop($request, $namespaces));
         $params     = [
             'encoding'           => 'UTF-8',
             'verifypeer'         => false,
