@@ -9,13 +9,6 @@ build:
         php71:
             environment:
                 php: 7.1
-    tests:
-        override:
-            -
-                command: 'vendor/bin/phpunit --coverage-clover=coverage-file'
-                coverage:
-                    file: 'coverage-file'
-                    format: 'clover'
 checks:
     php:
         remove_extra_empty_lines: true
