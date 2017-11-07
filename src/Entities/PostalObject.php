@@ -537,11 +537,9 @@ class PostalObject implements PrintableContract
         $matches += ['prefix' => null, 'sufix' => ''];
         $chars = str_split($matches['number'], 1);
         $sums = str_split("86423597", 1);
-        $sum = 0;
-        foreach ($chars as $i => $char) {
-            $sum += $char * $sums[$i];
-        }
-        $rest = $sum % 11;
+        $rest = array_reduce($chars, function (&$sum, $a) use (&$sums) {
+            return $sum += $a * array_shift($sums);
+        }) % 11;
         $dv = 5;
         if ($rest != 0) {
             $dv = $rest == 1 ? 0 : 11 - $rest;

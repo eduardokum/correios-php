@@ -9,8 +9,12 @@ class SoapNative extends Soap implements SoapContract
 {
     public function send($url, array $action = [], $request = '', $namespaces = [], $auth = [])
     {
+        if (!array_key_exists('native', $action)) {
+            throw new InvalidArgumentException('action for native not defined.');
+        }
+
         $this->request = $this->xmlToStd($this->envelop($request, $namespaces));
-        $params     = [
+        $params = [
             'encoding'           => 'UTF-8',
             'verifypeer'         => false,
             'verifyhost'         => false,
@@ -25,14 +29,9 @@ class SoapNative extends Soap implements SoapContract
             $params['password'] = $auth['password'];
         }
 
-        if (!array_key_exists('native', $action)) {
-            throw new InvalidArgumentException('action for native not defined.');
-        }
-
-        $action = $action['native'];
         try {
             $soapClient = new \SoapClient("$url?WSDL", $params);
-            $this->response = $response = $soapClient->$action($this->request);
+            $this->response = $response = $soapClient->{$action['native']}($this->request);
             $this->soapInfo = $soapClient->__getLastResponseHeaders();
         } catch (\SoapFault $e) {
             throw new SoapException($e->getMessage());
@@ -40,12 +39,6 @@ class SoapNative extends Soap implements SoapContract
             throw new SoapException($e->getMessage());
         }
 
-        if (is_soap_fault($response)) {
-            $this->soapError = vsprintf('%s - %s', [
-                $response->faltcode,
-                $response->faultstring,
-            ]);
-        }
         return $response;
     }
 
