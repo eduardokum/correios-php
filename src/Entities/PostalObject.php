@@ -542,8 +542,15 @@ class PostalObject implements PrintableContract
             $sum += $char * $sums[$i];
         }
         $rest = $sum % 11;
-        $dv = $rest == 0 ? '5' : ( $rest == 1 ? 0 : 11 - $rest );
-        return vsprintf('%s%s%s%s', [$matches['prefix'], $matches['number'], $dv, $matches['sufix']]);
+        $dv = 5;
+        if ($rest != 0) {
+            $dv = $rest == 1 ? 0 : 11 - $rest;
+        }
+        return vsprintf('%s%s%s', [
+            $matches['prefix'],
+            $matches['number'] . $dv,
+            $matches['sufix']
+        ]);
     }
 
     /**
@@ -564,17 +571,14 @@ class PostalObject implements PrintableContract
                 'tagDv' => self::calculateDv($tag)
             ];
         }
-        if (strlen($matches['number']) == 9) {
-            return [
-                'tag' => vsprintf('%s%s%s', [
-                    $matches['prefix'],
-                    substr($matches['number'], 0, -1),
-                    $matches['sufix'],
-                ]),
-                'tagDv' => $tag,
-            ];
-        }
 
-        throw new InvalidArgumentException(sprintf("Tag '%s' is invalid.", $tag));
+        return [
+            'tag' => vsprintf('%s%s%s', [
+                $matches['prefix'],
+                substr($matches['number'], 0, -1),
+                $matches['sufix'],
+            ]),
+            'tagDv' => $tag,
+        ];
     }
 }

@@ -39,7 +39,7 @@ abstract class Soap implements SoapContract
      */
     public $response;
     /**
-     * @var string
+     * @var mixed
      */
     public $request;
     /**
