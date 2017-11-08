@@ -9,6 +9,7 @@ Table of Contents:
 
     install
     configuration/index
+    usage/index
     license
     contributing
     support
