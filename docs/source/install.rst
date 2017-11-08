@@ -1,10 +1,9 @@
-============
 Installation
 ============
 
 At the command line::
 
-    composer install eduardokum/correios-php
+    composer require "eduardokum/correios-php"
 
 Or, Put in your composer.json file:
 

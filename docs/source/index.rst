@@ -1,10 +1,12 @@
-=============================
-Correios Php's documentation!
-=============================
+===================
+Correios Php's Docs
+===================
+
+Table of Contents:
+==================
 
 .. toctree::
-   :maxdepth: 2
 
-   install
-   support
-   get-started
+    install
+    configuration/index
+    support
