@@ -148,7 +148,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'correiosphp', u'Correios Php Documentation',
+    (master_doc, 'correiosphp', u'Correios Php Docs',
      [author], 1)
 ]
 
@@ -164,5 +164,10 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+# load PhpLexer
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
 
-
+# enable highlighting for PHP code not between <?php ... ?> by default
+lexers['php'] = PhpLexer(startinline=True)
+lexers['php-annotations'] = PhpLexer(startinline=True)
