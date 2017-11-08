@@ -4,12 +4,12 @@ namespace Eduardokum\CorreiosPhp\Config;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\Sender;
 
-class Test extends Config implements ConfigContract
+class Testing extends Config implements ConfigContract
 {
     public function __construct()
     {
         parent::__construct();
-        $this->environment = 'homologacao';
+        $this->environment = 'testing';
         $this->cnpj = '34028316000103';
         $this->user = null;
         $this->password = null;

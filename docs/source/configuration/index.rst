@@ -3,6 +3,6 @@ Configuration
 
 .. toctree::
 
-    test
+    testing
     production
 

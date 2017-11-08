@@ -13,7 +13,7 @@ class Sigep extends Correios
         parent::__construct($config, $type);
         $this->setWs($this->getWs('sigep'));
 
-        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+        if ($this->getConfig()->getEnvironment() == 'testing') {
             $this->getConfig()->setUser('sigep');
             $this->getConfig()->setPassword('n5f9t8');
         }

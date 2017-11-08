@@ -14,7 +14,7 @@ class Logistica extends Correios
         parent::__construct($config, $type);
         $this->setWs($this->getWs('logistica'));
 
-        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+        if ($this->getConfig()->getEnvironment() == 'testing') {
             $this->getConfig()->setUser('empresacws');
             $this->getConfig()->setPassword('123456');
         }

@@ -1,7 +1,7 @@
 <?php
 namespace Eduardokum\CorreiosPhp\Render;
 
-use Eduardokum\CorreiosPhp\Config\Test;
+use Eduardokum\CorreiosPhp\Config\Testing;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 
 abstract class Pdf
@@ -33,7 +33,7 @@ abstract class Pdf
 
     public function __construct(ConfigContract $config = null)
     {
-        $this->config = $config ?: new Test();
+        $this->config = $config ?: new Testing();
         $this->fontRegular = \TCPDF_FONTS::addTTFfont(CORREIOS_PHP_BASE . '/resources/assets/fonts/Arial.ttf', 'TrueTypeUnicode', '', 96);
         $this->fontBold = \TCPDF_FONTS::addTTFfont(CORREIOS_PHP_BASE . '/resources/assets/fonts/ArialBold.ttf', 'TrueTypeUnicode', '', 96);
     }

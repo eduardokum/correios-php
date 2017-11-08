@@ -10,7 +10,7 @@ class Rastreio extends Correios
         parent::__construct($config, $type);
         $this->setWs($this->getWs('rastreamento'));
 
-        if ($this->getConfig()->getEnvironment() == 'homologacao') {
+        if ($this->getConfig()->getEnvironment() == 'testing') {
             $this->getConfig()->setUser('ECT');
             $this->getConfig()->setPassword('SRO');
         }
