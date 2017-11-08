@@ -4,6 +4,7 @@ Production
 To create an production config.
 
 .. code-block:: php
+
     $config = new Producao();
     $sender = new Sender();
     $sender->setLogo('/path/to/logo')
@@ -28,11 +29,12 @@ To create an production config.
         ->setDirection('99')
         ->setSender($sender);
 
+
 Or, Simply:
 
 .. code-block:: php
 
-    config = new Producao::create([
+    $config = new Producao::create([
         'cnpj' => '00000000000000',
         'user' => 'user',
         'password' => 'pass',
