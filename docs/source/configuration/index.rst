@@ -3,6 +3,6 @@ Configuration
 
 .. toctree::
 
-    homologation
+    test
     production
 

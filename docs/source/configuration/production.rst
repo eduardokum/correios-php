@@ -1,11 +1,11 @@
 Production
 ==========
 
-To create an production config.
+To create a configuration, just instantiate the object and pass on your correct information
 
 .. code-block:: php
 
-    $config = new Producao();
+    $config = new Production();
     $sender = new Sender();
     $sender->setLogo('/path/to/logo')
         ->setName('Company')
@@ -34,7 +34,7 @@ Or, Simply:
 
 .. code-block:: php
 
-    $config = new Producao::create([
+    $config = new Production::create([
         'cnpj' => '00000000000000',
         'user' => 'user',
         'password' => 'pass',

@@ -4,7 +4,7 @@ namespace Eduardokum\CorreiosPhp\Config;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\Sender;
 
-class Homologacao extends Config implements ConfigContract
+class Test extends Config implements ConfigContract
 {
     public function __construct()
     {
