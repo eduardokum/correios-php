@@ -8,4 +8,16 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/eduardokum/correios-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/eduardokum/correios-php/?branch=master)
 [![Build Status](https://travis-ci.org/eduardokum/correios-php.svg?branch=master)](https://travis-ci.org/eduardokum/correios-php)
 
-Classes para acessar o sistema da SIGEP dos correios
+Correios Php is a simple way to access the webservices of the Brazilian post office.
+
+## Installation, Configuration and Usage
+To install, configure and learn how to use see documentation [Documentation](correios-php.readthedocs.io/).
+
+## License
+
+Correios Php is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## Contributing
+
+Please report any issue you find in the issues page.
+Pull requests are more than welcome.
