@@ -11,6 +11,7 @@
 Correios Php is a simple way to access the webservices of the Brazilian post office.
 
 ## Installation, Configuration and Usage
+
 To install, configure and learn how to use see documentation [Documentation](correios-php.readthedocs.io/).
 
 ## License
@@ -21,3 +22,16 @@ Correios Php is open-sourced software licensed under the [MIT license](http://op
 
 Please report any issue you find in the issues page.
 Pull requests are more than welcome.
+
+## Donations
+
+This is a totally OpenSource project, to use it, copy it and modify it you pay absolutely nothing. However, in order to continue to maintain it adequately, some contribution is required, whether it is aiding in coding, documentation, testing and fault identification and BUGs.
+
+But also, if you think that any information obtained here was useful and that this is worth some money and you are willing to donate something, feel free to send any amount, either directly to the author or through PayPal and PagSeguro.
+
+<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=QPDFT3UXS6PTL&lc=BR&item_name=Correios%20Php&item_number=CorreiosPHP&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">
+        <img alt="Doar com Paypal" src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/></a>
+<a target="_blank" href="https://pag.ae/bhn79Hc">
+	<img alt="Doar com Pagseguro" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"/></a>
+	
+*We appreciate the contribution.*

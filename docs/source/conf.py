@@ -82,7 +82,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'default'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -138,7 +138,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'CorreiosPhp.tex', u'Correios Php Documentation',
+    (master_doc, 'CorreiosPhp.tex', u'Correios Php Docs',
      u'Eduardo Gusmão', 'manual'),
 ]
 
@@ -159,7 +159,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'CorreiosPhp', u'Correios Php Documentation',
+    (master_doc, 'CorreiosPhp', u'Correios Php Docs',
      author, 'CorreiosPhp', 'One line description of project.',
      'Miscellaneous'),
 ]
