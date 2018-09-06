@@ -77,7 +77,8 @@ abstract class Correios
      */
     protected function url()
     {
-        return $this->ws->{$this->config->getEnvironment()};
+        $env = $this->config->getEnvironment() == 'testing' ? 'homologacao' : 'producao';
+        return $this->ws->$env;
     }
 
     /**
