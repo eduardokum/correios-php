@@ -531,15 +531,15 @@ class PostalObject implements PrintableContract
      */
     public static function calculateDv($tag)
     {
-        if (!preg_match('/(?<prefix>\D{2})?(?<number>\d{8})(?<sufix>\D{2})?/', $tag, $matches)) {
+        if (!preg_match('/(?<prefix>\D{2})?\s?(?<number>\d{8})\s?(?<sufix>\D{2})?/', $tag, $matches)) {
             throw new InvalidArgumentException("Invalid tag '$tag'");
         }
         $matches += ['prefix' => null, 'sufix' => ''];
         $chars = str_split($matches['number'], 1);
         $sums = str_split("86423597", 1);
         $rest = array_reduce($chars, function (&$sum, $a) use (&$sums) {
-            return $sum += $a * array_shift($sums);
-        }) % 11;
+                return $sum += $a * array_shift($sums);
+            }) % 11;
         $dv = 5;
         if ($rest != 0) {
             $dv = $rest == 1 ? 0 : 11 - $rest;
@@ -558,7 +558,7 @@ class PostalObject implements PrintableContract
      */
     public static function normalizeTag($tag)
     {
-        if (!preg_match('/(?<prefix>\D{2})?(?<number>\d{8,9})(?<sufix>\D{2})?/', $tag, $matches)) {
+        if (!preg_match('/(?<prefix>\D{2})?\s?(?<number>\d{8,9})\s?(?<sufix>\D{2})?/', $tag, $matches)) {
             throw new InvalidArgumentException(sprintf("Tag '%s' is not acceptable.", $tag));
         }
 

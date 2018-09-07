@@ -13,9 +13,9 @@ class Testing extends Config implements ConfigContract
         $this->cnpj = '34028316000103';
         $this->user = null;
         $this->password = null;
-        $this->administrativeCode = '08082650';
-        $this->contract = '9912208555';
-        $this->postCard = '0057018901';
+        $this->administrativeCode = '17000190';
+        $this->contract = '9992157880';
+        $this->postCard = '0067599079';
         $this->serviceCode = '41076';
         $this->direction = '36';
 

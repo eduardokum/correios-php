@@ -149,7 +149,7 @@ class Tag extends Pdf
     /**
      * @return string
      */
-    public function render()
+    public function render($output = 'I')
     {
         $tags = $this->getPrintable()->toPrint();
         $tagsCount = 0;
@@ -157,12 +157,12 @@ class Tag extends Pdf
             $tagsCount++;
             $position = $rest = $tagsCount % $this->getPerPage();
             $position = $position == 0 ? $this->getPerPage() : $position;
-            if ($rest === 1) {
-                $this->tcpdf->addPage();
+            if ($rest === 1 || count($tags) === 1) {
+                $this->tcpdf->AddPage();
             }
             $this->tag($tag, $position);
         }
-        return $this->tcpdf->Output('etiquetas.pdf', 'I');
+        return $this->tcpdf->Output('etiquetas.pdf', $output);
     }
 
     /**
