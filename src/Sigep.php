@@ -4,7 +4,7 @@ namespace Eduardokum\CorreiosPhp;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
-use Eduardokum\CorreiosPhp\Entities\Plp;
+use Eduardokum\CorreiosPhp\Entities\MailingList;
 
 class Sigep extends Correios
 {
@@ -151,17 +151,17 @@ class Sigep extends Correios
     }
 
     /**
-     * @param Plp $plp
+     * @param MailingList $mailingList
      *
      * @return \stdClass
      */
-    public function fechaPlpVariosServicos(Plp $plp)
+    public function fechaPlpVariosServicos(MailingList $mailingList)
     {
         $request = '<cli:fechaPlpVariosServicos>';
-        $request .= sprintf('<xml>%s</xml>', $plp->save($this->getConfig()));
-        $request .= sprintf('<idPlpCliente>%s</idPlpCliente>', $plp->getId());
+        $request .= sprintf('<xml>%s</xml>', $mailingList->save($this->getConfig()));
+        $request .= sprintf('<idPlpCliente>%s</idPlpCliente>', $mailingList->getId());
         $request .= sprintf('<cartaoPostagem>%s</cartaoPostagem>', $this->getConfig()->getPostCard());
-        foreach ($plp->getTags() as $tag) {
+        foreach ($mailingList->getTags() as $tag) {
             $request .= sprintf('<listaEtiquetas>%s</listaEtiquetas>', $tag);
         }
         $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUser());

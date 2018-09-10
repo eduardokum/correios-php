@@ -2,26 +2,26 @@
 namespace Eduardokum\CorreiosPhp\Render;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entities\Plp;
+use Eduardokum\CorreiosPhp\Entities\MailingList;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
 
 class DetailedListing extends Pdf
 {
     /**
-     * @var Plp
+     * @var MailingList
      */
-    private $plp;
+    private $mailingList;
 
     /**
      * @var mixed
      */
     private $postalServices;
 
-    public function __construct(Plp $plp, ConfigContract $config = null)
+    public function __construct(MailingList $mailingList, ConfigContract $config = null)
     {
         parent::__construct($config);
         $this->postalServices = json_decode(file_get_contents(CORREIOS_PHP_BASE . '/storage/postal_service.json'));
-        $this->setPlp($plp);
+        $this->setMailingList($mailingList);
 
         $this->tcpdf = new \TCPDF('L', 'mm', 'A4', true, 'UTF-8');
         $this->tcpdf->setPrintHeader(false);
@@ -37,21 +37,21 @@ class DetailedListing extends Pdf
     }
 
     /**
-     * @return Plp
+     * @return MailingList
      */
-    public function getPlp()
+    public function getMailingList()
     {
-        return $this->plp;
+        return $this->mailingList;
     }
 
     /**
-     * @param Plp $plp
+     * @param MailingList $mailingList
      *
      * @return DetailedListing
      */
-    public function setPlp(Plp $plp)
+    public function setMailingList(MailingList $mailingList)
     {
-        $this->plp = $plp;
+        $this->mailingList = $mailingList;
         return $this;
     }
 
@@ -66,7 +66,7 @@ class DetailedListing extends Pdf
         $lastPosition = $this->logo($x, $y);
         $lastPosition = $this->title($x, $lastPosition[1], $width);
         $lastPosition = $this->info($x, $lastPosition[1], $width);
-        $lastPosition = $this->tags($this->getPlp()->toPrint(), $x, $lastPosition[1], $width);
+        $lastPosition = $this->tags($this->getMailingList()->toPrint(), $x, $lastPosition[1], $width);
         $this->signature($x, $lastPosition[1], $width);
 
         if ($lastPosition[1] + 35 + 10 > $this->tcpdf->getPageHeight()) {
@@ -133,7 +133,7 @@ class DetailedListing extends Pdf
 
         $this->tcpdf->SetXY($x, $y);
         $this->writeBold(5, 'Nº da lista: ');
-        $this->tcpdf->Write(5, $this->getPlp()->getId());
+        $this->tcpdf->Write(5, $this->getMailingList()->getId());
         $y += 5;
 
         $this->tcpdf->SetXY($x, $y);

@@ -2,16 +2,16 @@
 namespace Eduardokum\CorreiosPhp\Render;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
-use Eduardokum\CorreiosPhp\Entities\Plp;
+use Eduardokum\CorreiosPhp\Entities\MailingList;
 use Eduardokum\CorreiosPhp\Entities\PostalObject;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
 
 class Voucher extends Pdf
 {
     /**
-     * @var Plp
+     * @var MailingList
      */
-    private $plp;
+    private $mailingList;
 
     /**
      * @var int
@@ -23,11 +23,11 @@ class Voucher extends Pdf
      */
     private $postalServices;
 
-    public function __construct(Plp $plp, ConfigContract $config = null)
+    public function __construct(MailingList $mailingList, ConfigContract $config = null)
     {
         parent::__construct($config);
         $this->postalServices = json_decode(file_get_contents(CORREIOS_PHP_BASE . '/storage/postal_service.json'));
-        $this->setPlp($plp);
+        $this->setMailingList($mailingList);
 
         $this->tcpdf = new \TCPDF(null, 'mm', 'A4', true, 'UTF-8');
         $this->tcpdf->setPrintHeader(false);
@@ -43,21 +43,21 @@ class Voucher extends Pdf
     }
 
     /**
-     * @return Plp
+     * @return MailingList
      */
-    public function getPlp()
+    public function getMailingList()
     {
-        return $this->plp;
+        return $this->mailingList;
     }
 
     /**
-     * @param Plp $plp
+     * @param MailingList $mailingList
      *
      * @return Voucher
      */
-    public function setPlp(Plp $plp)
+    public function setMailingList(MailingList $mailingList)
     {
-        $this->plp = $plp;
+        $this->mailingList = $mailingList;
         return $this;
     }
 
@@ -66,7 +66,7 @@ class Voucher extends Pdf
      */
     public function render()
     {
-        $services = $this->filterTags($this->plp->toPrint());
+        $services = $this->filterTags($this->mailingList->toPrint());
         if (count($services) == 0) {
             throw new InvalidArgumentException('No tags available for printing');
         }
@@ -85,12 +85,12 @@ class Voucher extends Pdf
      */
     private function filterTags(array $tags)
     {
-        $plpParsed = [];
+        $mailingListParsed = [];
         foreach ($tags as $postalObject) {
             /** @var PostalObject $postalObject */
-            $plpParsed[$postalObject->getService()][] = $postalObject;
+            $mailingListParsed[$postalObject->getService()][] = $postalObject;
         }
-        return $plpParsed;
+        return $mailingListParsed;
     }
 
     /**
@@ -218,10 +218,10 @@ class Voucher extends Pdf
         $y -= 25;
 
         $this->tcpdf->SetXY($x + 12, $y);
-        $this->writeBold(5, sprintf('Nº PLP: %d', $this->getPlp()->getId()));
+        $this->writeBold(5, sprintf('Nº PLP: %d', $this->getMailingList()->getId()));
         $y += 5;
 
-        $this->tcpdf->write1DBarcode($this->getPlp()->getId(), 'C128', $x, $y, 50, null, null, $style);
+        $this->tcpdf->write1DBarcode($this->getMailingList()->getId(), 'C128', $x, $y, 50, null, null, $style);
     }
 
     /**

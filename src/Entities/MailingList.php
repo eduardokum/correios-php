@@ -5,7 +5,7 @@ use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
 
-class Plp implements PrintableContract
+class MailingList implements PrintableContract
 {
 
     /**
@@ -14,7 +14,7 @@ class Plp implements PrintableContract
     private $id = 1;
 
     /**
-     * Plp constructor.
+     * MailingList constructor.
      *
      * @param $id
      */

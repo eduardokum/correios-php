@@ -21,7 +21,7 @@ class ETicket
     private $objects = [];
 
     /**
-     * Plp constructor.
+     * ETicket constructor.
      *
      * @param $id
      */
