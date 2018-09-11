@@ -55,7 +55,12 @@ class DetailedListing extends Pdf
         return $this;
     }
 
-    public function render()
+    /**
+     * @param string $output
+     *
+     * @return string
+     */
+    public function render($output = 'I')
     {
         $this->tcpdf->addPage();
         $x =  5;
@@ -73,7 +78,7 @@ class DetailedListing extends Pdf
             $this->tcpdf->addPage();
         }
 
-        return $this->tcpdf->Output('detailed_listing.pdf', 'I');
+        return $this->tcpdf->Output('detailed_listing.pdf', $output);
     }
 
     /**

@@ -81,9 +81,11 @@ class NoticeReceipt extends Pdf
     }
 
     /**
+     * @param string $output
+     *
      * @return string
      */
-    public function render()
+    public function render($output = 'I')
     {
         $tags = $this->filterTags($this->getPrintable()->toPrint());
 
@@ -102,7 +104,7 @@ class NoticeReceipt extends Pdf
             $this->noticeReceipt($tag, $position);
         }
 
-        return $this->tcpdf->Output('notice_receipt.pdf', 'I');
+        return $this->tcpdf->Output('notice_receipt.pdf', $output);
     }
 
     /**

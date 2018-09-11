@@ -62,9 +62,11 @@ class Voucher extends Pdf
     }
 
     /**
+     * @param string $output
+     *
      * @return string
      */
-    public function render()
+    public function render($output = 'I')
     {
         $services = $this->filterTags($this->mailingList->toPrint());
         if (count($services) == 0) {
@@ -75,7 +77,7 @@ class Voucher extends Pdf
         $lastPosition = $this->voucher($services, 5, 10);
         $this->voucher($services, $lastPosition[0], $lastPosition[1]);
 
-        return $this->tcpdf->Output('voucher.pdf', 'I');
+        return $this->tcpdf->Output('voucher.pdf', $output);
     }
 
     /**

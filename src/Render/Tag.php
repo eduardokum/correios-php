@@ -147,6 +147,8 @@ class Tag extends Pdf
     }
 
     /**
+     * @param string $output
+     *
      * @return string
      */
     public function render($output = 'I')
