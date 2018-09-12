@@ -42,6 +42,13 @@ class Rastreio extends Correios
         ];
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
-        return $result->return;
+        $result = $result->return;
+        $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
+        foreach($result->objeto as $objeto) {
+            $objeto->evento = isset($objeto->evento)
+                ? is_array($objeto->evento) ? $objeto->evento : [$objeto->evento]
+                : [];
+        }
+        return $result;
     }
 }

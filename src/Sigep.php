@@ -153,7 +153,7 @@ class Sigep extends Correios
     /**
      * @param MailingList $mailingList
      *
-     * @return \stdClass
+     * @return integer
      */
     public function fechaPlpVariosServicos(MailingList $mailingList)
     {
@@ -176,13 +176,7 @@ class Sigep extends Correios
         ];
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
-        $tags = explode(',', $result->return);
-        $result = [];
-        foreach ($tags as $i => $tag) {
-            $result[$tag] = PostalObject::calculateDv($tag);
-        }
-
-        return $result;
+        return $result->return;
     }
 
     /**
@@ -207,5 +201,47 @@ class Sigep extends Correios
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         return $result->xml;
+    }
+
+    /**
+     * @param array $codes
+     *
+     * @return \stdClass
+     */
+    public function consultaSRO(array $codes)
+    {
+        if ($this->getConfig()->getEnvironment() == 'testing') {
+            $this->getConfig()->setUser('ECT');
+            $this->getConfig()->setPassword('SRO');
+        }
+
+        $request = '<cli:consultaSRO>';
+        $request .= sprintf('<usuarioSro>%s</usuarioSro>', $this->getConfig()->getUser());
+        $request .= sprintf('<senhaSro>%s</senhaSro>', $this->getConfig()->getPassword());
+        $request .= sprintf('<tipoConsulta>%s</tipoConsulta>', 'L');
+        $request .= sprintf('<tipoResultado>%s</tipoResultado>', 'T');
+        foreach ($codes as $c) {
+            $request .= sprintf('<listaObjetos>%s</listaObjetos>', $c);
+        }
+        $request .= '</cli:consultaSRO>';
+        $namespaces = [
+            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
+        ];
+        $actions = [
+            'curl' => null,
+            'native' => 'buscaEventosLista',
+        ];
+
+        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
+
+        $xmlString = preg_replace('/\<\?xml.+\?\>/', '', $result->return);
+        $result = json_decode(json_encode(simplexml_load_string($xmlString)));
+        $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
+        foreach($result->objeto as $objeto) {
+            $objeto->evento = isset($objeto->evento)
+                ? is_array($objeto->evento) ? $objeto->evento : [$objeto->evento]
+                : [];
+        }
+        return $result;
     }
 }

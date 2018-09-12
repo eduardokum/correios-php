@@ -55,7 +55,7 @@ class Sender
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = substr($name, 0, 50);
 
         return $this;
     }
@@ -75,7 +75,7 @@ class Sender
      */
     public function setStreet($street)
     {
-        $this->street = $street;
+        $this->street = substr($street, 0, 50);
 
         return $this;
     }
@@ -115,7 +115,7 @@ class Sender
      */
     public function setComplement($complement)
     {
-        $this->complement = $complement;
+        $this->complement = substr($complement, 0, 30);
 
         return $this;
     }
@@ -135,7 +135,7 @@ class Sender
      */
     public function setDistrict($district)
     {
-        $this->district = $district;
+        $this->district = substr($district, 0, 30);
 
         return $this;
     }
@@ -175,7 +175,7 @@ class Sender
      */
     public function setCity($city)
     {
-        $this->city = $city;
+        $this->city = substr($city, 0, 30);
 
         return $this;
     }
@@ -195,7 +195,7 @@ class Sender
      */
     public function setState($state)
     {
-        $this->state = $state;
+        $this->state = substr($state, 0, 2);
 
         return $this;
     }
@@ -215,7 +215,7 @@ class Sender
      */
     public function setPhone($phone)
     {
-        $this->phone = $phone;
+        $this->phone = substr($phone, 0, 12);
 
         return $this;
     }
@@ -235,7 +235,7 @@ class Sender
      */
     public function setCellphone($cellphone)
     {
-        $this->cellphone = $cellphone;
+        $this->cellphone = substr($cellphone, 0, 12);
 
         return $this;
     }
@@ -255,7 +255,7 @@ class Sender
      */
     public function setMail($mail)
     {
-        $this->mail = $mail;
+        $this->mail = substr($mail, 0, 50);
 
         return $this;
     }
