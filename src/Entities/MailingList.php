@@ -4,6 +4,7 @@ namespace Eduardokum\CorreiosPhp\Entities;
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
 use Eduardokum\CorreiosPhp\Contracts\Render\Printable as PrintableContract;
 use Eduardokum\CorreiosPhp\Exception\InvalidArgumentException;
+use Eduardokum\CorreiosPhp\Validator;
 
 class MailingList implements PrintableContract
 {
@@ -104,6 +105,8 @@ class MailingList implements PrintableContract
 
 //        return $this->dom->saveXML($correioslog);
         $this->dom->appendChild($correioslog);
+        $xml = $this->dom->saveXML();
+        Validator::isValid($xml, realpath(CORREIOS_PHP_BASE . '/storage/schemes/') . '/plp.xsd');
         return htmlentities(utf8_encode($this->dom->saveXML()));
     }
 
