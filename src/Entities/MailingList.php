@@ -97,17 +97,13 @@ class MailingList implements PrintableContract
         $correioslog->appendChild($this->dom->createElement('forma_pagamento'));
 
         foreach ($this->objects as $object) {
-            $correioslog->appendChild($objeto_postal = $this->objectoPostal($object));
-            $objeto_postal->appendChild($this->destinatario($object));
-            $objeto_postal->appendChild($this->nacional($object));
-            $objeto_postal->appendChild($this->dimensao($object));
+            $correioslog->appendChild($this->objectoPostal($object));
         }
 
-//        return $this->dom->saveXML($correioslog);
         $this->dom->appendChild($correioslog);
-        $xml = $this->dom->saveXML();
+        $xml = utf8_encode($this->dom->saveXML());
         Validator::isValid($xml, realpath(CORREIOS_PHP_BASE . '/storage/schemes/') . '/plp.xsd');
-        return htmlentities(utf8_encode($this->dom->saveXML()));
+        return htmlentities($xml);
     }
 
     /**
@@ -244,6 +240,11 @@ class MailingList implements PrintableContract
         );
         $email_remetente->appendChild($this->dom->createCDATASection($config->getSender()->getMail()));
 
+        $remetente->appendChild(
+            $email_remetente = $this->dom->createElement('celular_remetente')
+        );
+        $email_remetente->appendChild($this->dom->createCDATASection($config->getSender()->getCellphone()));
+
         return $remetente;
     }
 
@@ -262,6 +263,10 @@ class MailingList implements PrintableContract
         $objeto_postal->appendChild($this->dom->createElement('peso', $object->getWeight()));
         $objeto_postal->appendChild($this->dom->createElement('rt1'));
         $objeto_postal->appendChild($this->dom->createElement('rt2'));
+        $objeto_postal->appendChild($this->destinatario($object));
+        $objeto_postal->appendChild($this->nacional($object));
+        $objeto_postal->appendChild($this->adicional($object));
+        $objeto_postal->appendChild($this->dimensao($object));
         $objeto_postal->appendChild($this->dom->createElement('data_postagem_sara'));
         $objeto_postal->appendChild($this->dom->createElement('status_processamento', '0'));
         $objeto_postal->appendChild($this->dom->createElement('numero_comprovante_postagem'));
@@ -382,6 +387,21 @@ class MailingList implements PrintableContract
      *
      * @return \DOMElement
      */
+    private function adicional(PostalObject $object)
+    {
+        $servico_adicional = $this->dom->createElement('servico_adicional');
+        foreach ($object->getAdditionalServices() as $aditional_service) {
+            $servico_adicional->appendChild($this->dom->createElement('codigo_servico_adicional', $aditional_service));
+        }
+        $servico_adicional->appendChild($this->dom->createElement('valor_declarado', $object->getValueDeclared()));
+        return $servico_adicional;
+    }
+
+    /**
+     * @param PostalObject $object
+     *
+     * @return \DOMElement
+     */
     private function dimensao(PostalObject $object)
     {
         $dimensao_objeto = $this->dom->createElement('dimensao_objeto');
@@ -389,7 +409,7 @@ class MailingList implements PrintableContract
         $dimensao_objeto->appendChild($this->dom->createElement('dimensao_altura', $object->getHeight()));
         $dimensao_objeto->appendChild($this->dom->createElement('dimensao_largura', $object->getWidth()));
         $dimensao_objeto->appendChild($this->dom->createElement('dimensao_comprimento', $object->getLength()));
-        $dimensao_objeto->appendChild($this->dom->createElement('dimensao_diametro', $object->getDiameter()));
+        $dimensao_objeto->appendChild($this->dom->createElement('dimensao_diametro', $object->getDiameter() ?: '0'));
 
         return $dimensao_objeto;
     }

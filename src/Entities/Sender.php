@@ -17,6 +17,7 @@ class Sender
     private $city;
     private $state;
     private $phone;
+    private $cellphone;
     private $mail;
 
     /**
@@ -215,6 +216,26 @@ class Sender
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCellphone()
+    {
+        return $this->cellphone;
+    }
+
+    /**
+     * @param mixed $cellphone
+     *
+     * @return Sender
+     */
+    public function setCellphone($cellphone)
+    {
+        $this->cellphone = $cellphone;
 
         return $this;
     }
