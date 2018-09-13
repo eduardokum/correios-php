@@ -14,6 +14,8 @@
         "ext-json": "*",
         "ext-curl": "*",
         "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-dom": "*",
         "tecnickcom/TCPDF": "^6.2",
         "symfony/var-dumper": "~4.0"
     },

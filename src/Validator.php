@@ -51,7 +51,7 @@ class Validator
         }
         libxml_use_internal_errors(true);
         libxml_clear_errors();
-        simplexml_load_string($content);
+        simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
         $errors = libxml_get_errors();
         libxml_clear_errors();
         return empty($errors);
