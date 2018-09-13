@@ -82,6 +82,7 @@ class MailingList implements PrintableContract
      * @param ConfigContract $config
      *
      * @return string
+     * @throws \Exception
      */
     public function save(ConfigContract $config)
     {
@@ -97,7 +98,7 @@ class MailingList implements PrintableContract
         $correioslog->appendChild($this->dom->createElement('forma_pagamento'));
 
         foreach ($this->objects as $object) {
-            $correioslog->appendChild($this->objectoPostal($object));
+            $correioslog->appendChild($this->objectPostal($object));
         }
 
         $this->dom->appendChild($correioslog);
@@ -253,7 +254,7 @@ class MailingList implements PrintableContract
      *
      * @return \DOMElement
      */
-    private function objectoPostal(PostalObject $object)
+    private function objectPostal(PostalObject $object)
     {
         $objeto_postal = $this->dom->createElement('objeto_postal');
         $objeto_postal->appendChild($this->dom->createElement('numero_etiqueta', $object->getTagDv()));
