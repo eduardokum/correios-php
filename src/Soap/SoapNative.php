@@ -59,7 +59,7 @@ class SoapNative extends Soap implements SoapContract
             ->childNodes->item(0); // Get Result Object;
         $response = $dom->saveXML($response);
         $response = preg_replace('/\<(\/?)\w+:(\w+\/?)\>/', '<$1$2>', $response);
-        $response  = simplexml_load_string($response, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $response  = simplexml_load_string($response, \SimpleXMLElement::class, LIBXML_NOCDATA);
         $response = json_encode($response, JSON_PRETTY_PRINT);
         return json_decode($response);
     }

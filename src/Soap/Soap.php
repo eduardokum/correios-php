@@ -158,7 +158,7 @@ abstract class Soap implements SoapContract
         $response = $dom->getElementsByTagName('Body')
             ->item(0) // Get Body
             ->childNodes->item(0); // Get Result Object;
-        $response  = simplexml_load_string($dom->saveXML($response), 'SimpleXMLElement', LIBXML_NOCDATA);
+        $response  = simplexml_load_string($dom->saveXML($response), \SimpleXMLElement::class, LIBXML_NOCDATA);
         $response = json_encode($response, JSON_PRETTY_PRINT);
         return json_decode($response);
     }
