@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:element name="versao_arquivo">
         <xs:simpleType>
@@ -100,14 +100,18 @@
     <xs:element name="telefone_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:maxLength value="12"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e 0,12 que pode ser vazio e no maximo 12 digitos  -->
+                <xs:pattern value="[0-9]{0,12}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
     <xs:element name="telefone_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:maxLength value="12"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e 0,12 que pode ser vazio e no maximo 12 digitos  -->
+                <xs:pattern value="[0-9]{0,12}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -117,6 +121,7 @@
                 <xs:enumeration value="0"/>
                 <xs:enumeration value="1"/>
                 <xs:enumeration value="2"/>
+                <xs:pattern value="[0-2]{1}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -226,8 +231,9 @@
     <xs:element name="numero_etiqueta">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="13"/>
-                <xs:maxLength value="13"/>
+                <!-- Preenchimento obrigatório -->
+                <!-- o pattern, a-zA-Z intervalo pode ser minusculo ou maiusculo com duas letras 9 números e 2 letras finais  -->
+                <xs:pattern value="[A-Z]{2}[0-9]{9}[A-Z]{2}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -276,7 +282,7 @@
     <xs:element name="numero_contrato">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="10"/>
+                <xs:pattern value="[0-9]{10}"/>
                 <xs:maxLength value="10"/>
             </xs:restriction>
         </xs:simpleType>
@@ -292,6 +298,8 @@
     <xs:element name="nome_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+ "/> -->
                 <xs:maxLength value="50"/>
             </xs:restriction>
         </xs:simpleType>
@@ -299,6 +307,8 @@
     <xs:element name="nome_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/> -->
                 <xs:maxLength value="50"/>
             </xs:restriction>
         </xs:simpleType>
@@ -331,13 +341,15 @@
     <xs:element name="mcu_unidade_postagem">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:maxLength value="10"/>
+                <xs:maxLength value="12"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
     <xs:element name="logradouro_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!--  <xs:pattern value="[a-z A-Z 0-9]+"/> -->
                 <xs:maxLength value="50"/>
             </xs:restriction>
         </xs:simpleType>
@@ -345,6 +357,8 @@
     <xs:element name="logradouro_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/> -->
                 <xs:maxLength value="50"/>
             </xs:restriction>
         </xs:simpleType>
@@ -362,8 +376,10 @@
     </xs:element>
     <xs:element name="fax_remetente">
         <xs:simpleType>
+            <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+            <!-- o pattern, valor seja só número 0-9 e 0,12 que pode ser vazio e no maximo 12 digitos  -->
             <xs:restriction base="xs:string">
-                <xs:maxLength value="12"/>
+                <xs:pattern value="[0-9]{0,12}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -374,17 +390,19 @@
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
+    <xs:element name="celular_remetente">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e 0,12 que pode ser vazio e no maximo 12 digitos  -->
+                <xs:pattern value="[0-9]{0,12}"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
     <xs:element name="email_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:maxLength value="50"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
-    <xs:element name="celular_remetente">
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:maxLength value="12"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -409,7 +427,9 @@
     </xs:element>
     <xs:element name="dimensao_altura">
         <xs:simpleType>
-            <xs:restriction base="xs:int">
+            <xs:restriction base="xs:integer">
+                <!--Para: <tipo_objeto> = 001, preencher com “0” <tipo_objeto> = 002, obrigatório <tipo_objeto> = 003, preencher com “0” -->
+                <xs:pattern value="[0-9]{0,5}"/>
                 <xs:minInclusive value="2"/>
                 <xs:maxInclusive value="105"/>
             </xs:restriction>
@@ -417,7 +437,8 @@
     </xs:element>
     <xs:element name="dimensao_largura">
         <xs:simpleType>
-            <xs:restriction base="xs:int">
+            <xs:restriction base="xs:integer">
+                <xs:pattern value="[0-9]{0,5}"/>
                 <xs:minInclusive value="11"/>
                 <xs:maxInclusive value="105"/>
             </xs:restriction>
@@ -425,7 +446,8 @@
     </xs:element>
     <xs:element name="dimensao_comprimento">
         <xs:simpleType>
-            <xs:restriction base="xs:int">
+            <xs:restriction base="xs:integer">
+                <xs:pattern value="[0-9]{0,5}"/>
                 <xs:minInclusive value="16"/>
                 <xs:maxInclusive value="105"/>
             </xs:restriction>
@@ -433,8 +455,9 @@
     </xs:element>
     <xs:element name="dimensao_diametro">
         <xs:simpleType>
-            <xs:restriction base="xs:int">
-                <xs:minInclusive value="0"/>
+            <xs:restriction base="xs:integer">
+                <xs:pattern value="[0-9]{0,5}"/>
+                <xs:minInclusive value="5"/>
                 <xs:maxInclusive value="105"/>
             </xs:restriction>
         </xs:simpleType>
@@ -486,6 +509,8 @@
     <xs:element name="complemento_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/> -->
                 <xs:maxLength value="30"/>
             </xs:restriction>
         </xs:simpleType>
@@ -493,6 +518,8 @@
     <xs:element name="complemento_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/> -->
                 <xs:maxLength value="30"/>
             </xs:restriction>
         </xs:simpleType>
@@ -507,7 +534,6 @@
     <xs:element name="codigo_servico_postagem">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="5"/>
                 <xs:maxLength value="5"/>
             </xs:restriction>
         </xs:simpleType>
@@ -523,8 +549,9 @@
     <xs:element name="codigo_administrativo">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="8"/>
-                <xs:maxLength value="8"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e obrigatorio ter 8 digitos  -->
+                <xs:pattern value="[0-9]{8}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -545,16 +572,18 @@
     <xs:element name="cep_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="8"/>
-                <xs:maxLength value="8"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e obrigatorio ter 8 digitos  -->
+                <xs:pattern value="[0-9]{8}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
     <xs:element name="cep_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="8"/>
-                <xs:maxLength value="8"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e obrigatorio ter 8 digitos  -->
+                <xs:pattern value="[0-9]{8}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
@@ -568,21 +597,26 @@
     <xs:element name="celular_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:maxLength value="12"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e 0,12 que pode ser vazio e no maximo 12 digitos  -->
+                <xs:pattern value="[0-9]{0,12}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
     <xs:element name="cartao_postagem">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="10"/>
-                <xs:maxLength value="10"/>
+                <!-- Não pode existir espaço ou qualquer caractere (Ex: hífen, parênteses, barra, sinal de mais) -->
+                <!-- o pattern, valor seja só número 0-9 e obrigatorio ter 10 digitos  -->
+                <xs:pattern value="[0-9]{10}"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
     <xs:element name="bairro_remetente">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/>	  -->
                 <xs:maxLength value="30"/>
             </xs:restriction>
         </xs:simpleType>
@@ -590,6 +624,8 @@
     <xs:element name="bairro_destinatario">
         <xs:simpleType>
             <xs:restriction base="xs:string">
+                <!-- Verifica se o que foi digitado está em minusculo/maiusculo se der erro por acentuação usar CDATA[] -->
+                <!-- <xs:pattern value="[a-z A-Z 0-9]+"/>	  -->
                 <xs:maxLength value="30"/>
             </xs:restriction>
         </xs:simpleType>
