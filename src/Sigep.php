@@ -201,7 +201,10 @@ class Sigep extends Correios
         ];
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
-        return $result->return;
+
+        $result = json_decode(json_encode(simplexml_load_string($result->return, \SimpleXMLElement::class, LIBXML_NOCDATA)));
+        $result->objeto_postal = is_array($result->objeto_postal) ? $result->objeto_postal : [$result->objeto_postal];
+        return $result;
     }
 
     /**
