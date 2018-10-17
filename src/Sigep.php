@@ -235,8 +235,7 @@ class Sigep extends Correios
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
 
-        $xmlString = preg_replace('/\<\?xml.+\?\>/', '', $result->return);
-        $result = json_decode(json_encode(simplexml_load_string($xmlString, \SimpleXMLElement::class, LIBXML_NOCDATA)));
+        $result = json_decode(json_encode(simplexml_load_string($result->return, \SimpleXMLElement::class, LIBXML_NOCDATA)));
         $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
         foreach($result->objeto as $objeto) {
             $objeto->evento = isset($objeto->evento)
