@@ -154,6 +154,7 @@ class Sigep extends Correios
      * @param MailingList $mailingList
      *
      * @return integer
+     * @throws \Exception
      */
     public function fechaPlpVariosServicos(MailingList $mailingList)
     {
@@ -200,7 +201,7 @@ class Sigep extends Correios
         ];
 
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
-        return $result->xml;
+        return $result->return;
     }
 
     /**
