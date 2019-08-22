@@ -26,7 +26,7 @@ trait MagicTrait
      */
     public static function create(array $params)
     {
-        $obj = new self();
+        $obj = new static();
         return $obj->fill($params);
     }
 }
