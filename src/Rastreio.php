@@ -47,7 +47,7 @@ class Rastreio extends Correios
         $result = $result->return;
         $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
 
-        if (isset($result->objeto[0]->erro)) {
+        if (strtolower($result->objeto[0]->numero) == 'erro') {
             throw new SoapException('Rastreio: ' . $result->objeto[0]->erro);
         }
 
