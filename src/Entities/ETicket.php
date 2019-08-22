@@ -21,13 +21,20 @@ class ETicket
     private $objects = [];
 
     /**
+     * @var int
+     */
+    private $serviceCode;
+
+    /**
      * ETicket constructor.
      *
      * @param $id
+     * @param $serviceCode
      */
-    public function __construct($id)
+    public function __construct($id, $serviceCode)
     {
         $this->id = $id;
+        $this->serviceCode = $serviceCode;
     }
 
     /**
@@ -36,6 +43,14 @@ class ETicket
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getServiceCode()
+    {
+        return $this->serviceCode;
     }
 
     /**

@@ -11,8 +11,8 @@ class Rastreio extends Correios
         $this->setWs($this->getWs('rastreamento'));
 
         if ($this->getConfig()->getEnvironment() == 'testing') {
-            $this->getConfig()->setUser('ECT');
-            $this->getConfig()->setPassword('SRO');
+            $this->getConfig()->setUserRastro('ECT');
+            $this->getConfig()->setPasswordRastro('SRO');
         }
     }
 
@@ -24,8 +24,8 @@ class Rastreio extends Correios
     public function rastreamento(array $codes)
     {
         $request = '<res:buscaEventosLista>';
-        $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUser());
-        $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPassword());
+        $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUserRastro());
+        $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPasswordRastro());
         $request .= sprintf('<tipo>%s</tipo>', 'L');
         $request .= sprintf('<resultado>%s</resultado>', 'T');
         $request .= sprintf('<lingua>%s</lingua>', '101');

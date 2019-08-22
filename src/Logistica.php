@@ -51,7 +51,7 @@ class Logistica extends Correios
     {
         $request = '<cli:solicitarPostagemReversa>';
         $request .= sprintf('<codAdministrativo>%s</codAdministrativo>', $this->getConfig()->getAdministrativeCode());
-        $request .= sprintf('<codigo_servico>%s</codigo_servico>', $this->getConfig()->getServiceCode());
+        $request .= sprintf('<codigo_servico>%s</codigo_servico>', $ETicket->getServiceCode());
         $request .= sprintf('<cartao>%s</cartao>', $this->getConfig()->getPostCard());
         $request .= '<destinatario>';
         $request .= sprintf('<nome>%s</nome>', $this->getConfig()->getSender()->getName());
@@ -94,7 +94,7 @@ class Logistica extends Correios
     {
         $request = '<cli:solicitarPostagemSimultanea>';
         $request .= sprintf('<codAdministrativo>%s</codAdministrativo>', $this->getConfig()->getAdministrativeCode());
-        $request .= sprintf('<codigo_servico>%s</codigo_servico>', $this->getConfig()->getServiceCode());
+        $request .= sprintf('<codigo_servico>%s</codigo_servico>', $ETicket->getServiceCode());
         $request .= sprintf('<cartao>%s</cartao>', $this->getConfig()->getPostCard());
         $request .= '<destinatario>';
         $request .= sprintf('<nome>%s</nome>', $this->getConfig()->getSender()->getName());

@@ -16,6 +16,8 @@ class Sigep extends Correios
         if ($this->getConfig()->getEnvironment() == 'testing') {
             $this->getConfig()->setUser('sigep');
             $this->getConfig()->setPassword('n5f9t8');
+            $this->getConfig()->setUser('sigep');
+            $this->getConfig()->setPassword('n5f9t8');
         }
     }
 
@@ -219,15 +221,14 @@ class Sigep extends Correios
             $this->getConfig()->setPassword('SRO');
         }
 
-        $request = '<cli:consultaSRO>';
-        $request .= sprintf('<usuarioSro>%s</usuarioSro>', $this->getConfig()->getUser());
-        $request .= sprintf('<senhaSro>%s</senhaSro>', $this->getConfig()->getPassword());
-        $request .= sprintf('<tipoConsulta>%s</tipoConsulta>', 'L');
+        $request = '<cli:consultaSRO_NEW>';
+        $request .= sprintf('<usuarioSro>%s</usuarioSro>', $this->getConfig()->getUserRastro());
+        $request .= sprintf('<senhaSro>%s</senhaSro>', $this->getConfig()->getPasswordRastro());
         $request .= sprintf('<tipoResultado>%s</tipoResultado>', 'T');
         foreach ($codes as $c) {
             $request .= sprintf('<listaObjetos>%s</listaObjetos>', $c);
         }
-        $request .= '</cli:consultaSRO>';
+        $request .= '</cli:consultaSRO_NEW>';
         $namespaces = [
             'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
         ];

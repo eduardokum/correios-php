@@ -16,6 +16,12 @@ interface Config
     public function getPassword();
     public function setPassword($password);
 
+    public function getUserRastro();
+    public function setUserRastro($user);
+
+    public function getPasswordRastro();
+    public function setPasswordRastro($password);
+
     public function getAdministrativeCode();
     public function setAdministrativeCode($administrativecode);
 
@@ -24,9 +30,6 @@ interface Config
 
     public function getPostCard();
     public function setPostCard($postcard);
-
-    public function getServiceCode();
-    public function setServiceCode($servicecode);
 
     public function getDirection();
     public function setDirection($direction);

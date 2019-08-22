@@ -16,7 +16,6 @@ class Testing extends Config implements ConfigContract
         $this->administrativeCode = '17000190';
         $this->contract = '9992157880';
         $this->postCard = '0067599079';
-        $this->serviceCode = '41076';
         $this->direction = '36';
 
         $this->setSender(Sender::create([
