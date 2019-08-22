@@ -217,8 +217,8 @@ class Sigep extends Correios
     public function consultaSRO(array $codes)
     {
         if ($this->getConfig()->getEnvironment() == 'testing') {
-            $this->getConfig()->setUser('ECT');
-            $this->getConfig()->setPassword('SRO');
+            $this->getConfig()->setUserRastro('ECT');
+            $this->getConfig()->setPasswordRastro('SRO');
         }
 
         $request = '<cli:consultaSRO_NEW>';
