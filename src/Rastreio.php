@@ -2,6 +2,7 @@
 namespace Eduardokum\CorreiosPhp;
 
 use Eduardokum\CorreiosPhp\Contracts\Config\Config as ConfigContract;
+use Eduardokum\CorreiosPhp\Exception\SoapException;
 
 class Rastreio extends Correios
 {
@@ -20,6 +21,7 @@ class Rastreio extends Correios
      * @param array $codes
      *
      * @return \stdClass
+     * @throws SoapException
      */
     public function rastreamento(array $codes)
     {
@@ -44,6 +46,11 @@ class Rastreio extends Correios
         $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
         $result = $result->return;
         $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
+
+        if (isset($result->objeto[0]->erro)) {
+            throw new SoapException('Rastreio: ' . $result->objeto[0]->erro);
+        }
+
         foreach($result->objeto as $objeto) {
             $objeto->evento = isset($objeto->evento)
                 ? is_array($objeto->evento) ? $objeto->evento : [$objeto->evento]
