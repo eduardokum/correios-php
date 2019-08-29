@@ -211,10 +211,11 @@ class Sigep extends Correios
 
     /**
      * @param array $codes
+     * @param bool  $last
      *
      * @return \stdClass
      */
-    public function consultaSRO(array $codes)
+    public function consultaSRO(array $codes, $last = false)
     {
         if ($this->getConfig()->getEnvironment() == 'testing') {
             $this->getConfig()->setUserRastro('ECT');
@@ -224,7 +225,7 @@ class Sigep extends Correios
         $request = '<cli:consultaSRO_NEW>';
         $request .= sprintf('<usuarioSro>%s</usuarioSro>', $this->getConfig()->getUserRastro());
         $request .= sprintf('<senhaSro>%s</senhaSro>', $this->getConfig()->getPasswordRastro());
-        $request .= sprintf('<tipoResultado>%s</tipoResultado>', 'T');
+        $request .= sprintf('<tipoResultado>%s</tipoResultado>', $last ? 'U' : 'T');
         foreach ($codes as $c) {
             $request .= sprintf('<listaObjetos>%s</listaObjetos>', $c);
         }

@@ -19,17 +19,18 @@ class Rastreio extends Correios
 
     /**
      * @param array $codes
+     * @param bool  $last
      *
      * @return \stdClass
      * @throws SoapException
      */
-    public function rastreamento(array $codes)
+    public function rastreamento(array $codes, $last = false)
     {
         $request = '<res:buscaEventosLista>';
         $request .= sprintf('<usuario>%s</usuario>', $this->getConfig()->getUserRastro());
         $request .= sprintf('<senha>%s</senha>', $this->getConfig()->getPasswordRastro());
         $request .= sprintf('<tipo>%s</tipo>', 'L');
-        $request .= sprintf('<resultado>%s</resultado>', 'T');
+        $request .= sprintf('<resultado>%s</resultado>', $last ? 'U' : 'T');
         $request .= sprintf('<lingua>%s</lingua>', '101');
         foreach ($codes as $c) {
             $request .= sprintf('<objetos>%s</objetos>', $c);
