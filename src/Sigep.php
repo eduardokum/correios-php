@@ -214,39 +214,10 @@ class Sigep extends Correios
      * @param bool  $last
      *
      * @return \stdClass
+     * @throws Exception\SoapException
      */
     public function consultaSRO(array $codes, $last = false)
     {
-        if ($this->getConfig()->getEnvironment() == 'testing') {
-            $this->getConfig()->setUserRastro('ECT');
-            $this->getConfig()->setPasswordRastro('SRO');
-        }
-
-        $request = '<cli:consultaSRO_NEW>';
-        $request .= sprintf('<usuarioSro>%s</usuarioSro>', $this->getConfig()->getUserRastro());
-        $request .= sprintf('<senhaSro>%s</senhaSro>', $this->getConfig()->getPasswordRastro());
-        $request .= sprintf('<tipoResultado>%s</tipoResultado>', $last ? 'U' : 'T');
-        foreach ($codes as $c) {
-            $request .= sprintf('<listaObjetos>%s</listaObjetos>', $c);
-        }
-        $request .= '</cli:consultaSRO_NEW>';
-        $namespaces = [
-            'xmlns:cli' => 'http://cliente.bean.master.sigep.bsb.correios.com.br/',
-        ];
-        $actions = [
-            'curl' => null,
-            'native' => 'buscaEventosLista',
-        ];
-
-        $result = $this->getSoap()->send($this->url(), $actions, $request, $namespaces);
-
-        $result = json_decode(json_encode(simplexml_load_string($result->return, \SimpleXMLElement::class, LIBXML_NOCDATA)));
-        $result->objeto = is_array($result->objeto) ? $result->objeto : [$result->objeto];
-        foreach($result->objeto as $objeto) {
-            $objeto->evento = isset($objeto->evento)
-                ? is_array($objeto->evento) ? $objeto->evento : [$objeto->evento]
-                : [];
-        }
-        return $result;
+        return (new Rastreio($this->getConfig()))->rastreamento($codes, $last);
     }
 }
