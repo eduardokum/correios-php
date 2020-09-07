@@ -31,4 +31,4 @@ $config->setCNPJ('08768469000187')
 //print_r($rastro->rastreamento(['PS290586454BR']));
 
 $sigep = new \Eduardokum\CorreiosPhp\Sigep($config);
-print_r($sigep->consultaSRO(['PU970742477BR'], true));
+print_r($sigep->consultaSRO(['PX139886337BR', 'LO306763389CN'], true));
